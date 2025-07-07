@@ -293,4 +293,60 @@ body {
 }
 #ttsModal button:hover {
   background: #0056b3;
+}
+
+/* Animated Background */
+#animated-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(270deg, #ff6ec4, #7873f5, #42e695, #ff6ec4);
+  background-size: 800% 800%;
+  animation: gradientBG 16s ease infinite;
+}
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated Home/NGR Button */
+.animated-btn {
+  background: linear-gradient(90deg, #ff6ec4, #7873f5, #42e695, #ff6ec4);
+  background-size: 400% 400%;
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 32px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: btnGradient 6s ease-in-out infinite;
+  margin: 24px auto 0 auto;
+  display: block;
+}
+.animated-btn:hover {
+  transform: scale(1.07) rotate(-2deg);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+@keyframes btnGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Date Display */
+#dateDisplay {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.25);
+  padding: 6px 18px;
+  border-radius: 18px;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 1000;
 } 

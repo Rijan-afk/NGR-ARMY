@@ -587,27 +587,27 @@
             <div class="resource-item">
                 <h3>A top an Edit cc Premium For NGR</h3>
                 <p></p>
-                <a href="https://www.mediafire.com/file/zonnw7j1lp67s2z/a_an_top_edit.rar/file" target="_blank" aria-label="Download A top an Edit cc Premium For NGR">Open Link</a>
+                <button class="open-link-btn" data-link="https://www.mediafire.com/file/zonnw7j1lp67s2z/a_an_top_edit.rar/file" aria-label="Download A top an Edit cc Premium For NGR">Open Link</button>
             </div>
             <div class="resource-item">
                 <h3>Medicine</h3>
                 <p></p>
-                <a href="https://www.mediafire.com/file/jwmil38minzygqn/Medicine.rar/file" target="_blank" aria-label="Download Medicine">Open Link</a>
+                <button class="open-link-btn" data-link="https://www.mediafire.com/file/jwmil38minzygqn/Medicine.rar/file" aria-label="Download Medicine">Open Link</button>
             </div>
             <div class="resource-item">
                 <h3>Topaz 7.0.3</h3>
                 <p></p>
-                <a href="https://www.mediafire.com/file/2vbhi4ce146gxzo/Topaz_Video_AI_Pro_7.0.3_%2528x64%2529_%255BFileCR%255D.rar/file" target="_blank" aria-label="Download Topaz 7.0.3">Open Link</a>
+                <button class="open-link-btn" data-link="https://www.mediafire.com/file/2vbhi4ce146gxzo/Topaz_Video_AI_Pro_7.0.3_%2528x64%2529_%255BFileCR%255D.rar/file" aria-label="Download Topaz 7.0.3">Open Link</button>
             </div>
             <div class="resource-item">
                 <h3>ninja ripper</h3>
                 <p></p>
-                <a href="https://www.mediafire.com/file/8lbld9z63j07ap2/NinjaRipper.exe/file" target="_blank" aria-label="Download ninja ripper">Open Link</a>
+                <button class="open-link-btn" data-link="https://www.mediafire.com/file/8lbld9z63j07ap2/NinjaRipper.exe/file" aria-label="Download ninja ripper">Open Link</button>
             </div>
             <div class="resource-item">
                 <h3>Noeisi+Ninja Ripper Full App Safe</h3>
                 <p></p>
-                <a href="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" target="_blank" aria-label="Download Noeisi+Ninja Ripper Full App Safe">Open Link</a>
+                <button class="open-link-btn" data-link="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" aria-label="Download Noeisi+Ninja Ripper Full App Safe">Open Link</button>
             </div>
         </div>
     </div>
@@ -635,9 +635,13 @@
     <!-- ------------------------------------------ -->
     <!-- Modal -->
     <!-- ------------------------------------------ -->
-    <div class="modal">
+    <div class="modal" id="password-modal">
         <div class="modal-content">
-            <!-- Modal Content -->
+            <h3>Enter Password to Open Link</h3>
+            <input type="password" id="resource-password" placeholder="Password" aria-label="Resource Password">
+            <button id="submit-password">Submit</button>
+            <button id="cancel-password">Cancel</button>
+            <p id="password-error" style="color: red; display: none;">Incorrect password. Please try again.</p>
         </div>
     </div>
 
@@ -668,6 +672,35 @@
                 error.style.display = 'block';
             }
         }
+
+        // Password-protected resource links
+        let currentResourceLink = '';
+        document.querySelectorAll('.open-link-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentResourceLink = this.getAttribute('data-link');
+                document.getElementById('resource-password').value = '';
+                document.getElementById('password-error').style.display = 'none';
+                document.getElementById('password-modal').style.display = 'flex';
+                document.getElementById('resource-password').focus();
+            });
+        });
+        document.getElementById('submit-password').addEventListener('click', function() {
+            const entered = document.getElementById('resource-password').value;
+            if (entered === '2') {
+                document.getElementById('password-modal').style.display = 'none';
+                window.open(currentResourceLink, '_blank');
+            } else {
+                document.getElementById('password-error').style.display = 'block';
+            }
+        });
+        document.getElementById('cancel-password').addEventListener('click', function() {
+            document.getElementById('password-modal').style.display = 'none';
+        });
+        document.getElementById('resource-password').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('submit-password').click();
+            }
+        });
     </script>
 </body>
 </html>

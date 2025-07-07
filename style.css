@@ -442,4 +442,32 @@ body {
 #homeLinks a:hover {
   color: #4f8cff;
   text-shadow: 0 2px 8px #4f8cff44;
-} 
+}
+
+.ascii-border {
+  position: relative;
+}
+.ascii-border .ascii-top,
+.ascii-border .ascii-bottom {
+  width: 100%;
+  text-align: center;
+  font-size: 2em;
+  line-height: 1;
+  position: absolute;
+  left: 0;
+}
+.ascii-border .ascii-top { top: 0; }
+.ascii-border .ascii-bottom { bottom: 0; }
+.ascii-border .ascii-left,
+.ascii-border .ascii-right {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  font-size: 2em;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ascii-border .ascii-left { left: 0; }
+.ascii-border .ascii-right { right: 0; } 

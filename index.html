@@ -125,6 +125,46 @@
       background: linear-gradient(90deg, #43cea2, #4f8cff);
       color: #23233a;
     }
+    .nav-ngr {
+      color: #fff;
+      background: linear-gradient(90deg, #4f8cff, #43cea2);
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 8px 32px;
+      margin: 0 12px;
+      box-shadow: 0 2px 8px #4f8cff44;
+      letter-spacing: 2px;
+      border: none;
+      outline: none;
+      transition: background 0.2s, color 0.2s;
+      text-shadow: 0 2px 8px #0002;
+      cursor: pointer;
+    }
+    .nav-ngr:active {
+      background: linear-gradient(90deg, #43cea2, #4f8cff);
+      color: #23233a;
+    }
+    .nav-follow {
+      color: #fff;
+      background: linear-gradient(90deg, #4f8cff, #43cea2);
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 12px;
+      padding: 8px 32px;
+      margin: 0 12px;
+      box-shadow: 0 2px 8px #4f8cff44;
+      letter-spacing: 2px;
+      border: none;
+      outline: none;
+      transition: background 0.2s, color 0.2s;
+      text-shadow: 0 2px 8px #0002;
+      cursor: pointer;
+    }
+    .nav-follow:active {
+      background: linear-gradient(90deg, #43cea2, #4f8cff);
+      color: #23233a;
+    }
     .under-working {
       color: #fff;
       font-size: 2rem;
@@ -139,6 +179,8 @@
       .login-container { width: 95vw; padding: 32px 8vw; }
       .navbar { font-size: 1rem; }
       .nav-home { padding: 8px 16px; font-size: 1rem; }
+      .nav-ngr { padding: 8px 16px; font-size: 1rem; }
+      .nav-follow { padding: 8px 16px; font-size: 1rem; }
       .under-working { font-size: 1.2rem; margin-top: 90px; }
     }
     .ngr-bg-fade {
@@ -201,13 +243,24 @@
   <div class="navbar" id="navbar" style="display:none;">
     <button class="nav-home" id="homeTab">Home</button>
     <button class="nav-ngr" id="ngrTab">NGR</button>
+    <button class="nav-follow" id="followTab">Follow Us!</button>
   </div>
   <!-- Home Content Wrapper -->
   <div id="homeContent" style="display:none;">
     <div class="ngr-gradient-bg"></div>
     <svg class="ngr-watermark-svg" viewBox="0 0 1200 900" width="100%" height="100%">
-      <text x="50%" y="38%" text-anchor="middle" font-size="180" font-family="Montserrat, Arial, sans-serif" fill="transparent" stroke="#fff" stroke-width="18" style="paint-order:stroke;letter-spacing:40px;opacity:0.9;">NGR</text>
-      <text x="50%" y="68%" text-anchor="middle" font-size="180" font-family="Montserrat, Arial, sans-serif" fill="transparent" stroke="#fff" stroke-width="18" style="paint-order:stroke;letter-spacing:40px;opacity:0.9;">RIJAN</text>
+      <defs>
+        <linearGradient id="ngrFillGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4f8cff">
+            <animate attributeName="stop-color" values="#4f8cff;#43cea2;#ff6ec4;#4f8cff" dur="8s" repeatCount="indefinite" />
+          </stop>
+          <stop offset="100%" stop-color="#ff6ec4">
+            <animate attributeName="stop-color" values="#ff6ec4;#43cea2;#4f8cff;#ff6ec4" dur="8s" repeatCount="indefinite" />
+          </stop>
+        </linearGradient>
+      </defs>
+      <text class="ngr-anim-text" x="50%" y="38%" text-anchor="middle" font-size="180" font-family="Montserrat, Arial, sans-serif" fill="url(#ngrFillGradient)" fill-opacity="0.45" stroke="#fff" stroke-width="18" style="paint-order:stroke;letter-spacing:40px;opacity:0.9;">NGR</text>
+      <text class="ngr-anim-text" x="50%" y="68%" text-anchor="middle" font-size="180" font-family="Montserrat, Arial, sans-serif" fill="url(#ngrFillGradient)" fill-opacity="0.45" stroke="#fff" stroke-width="18" style="paint-order:stroke;letter-spacing:40px;opacity:0.9;">RIJAN</text>
     </svg>
     <div id="homeLinksContainer" class="home-links-rect">
       <div id="homeLinks" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;gap:40px;padding:24px 0;">
@@ -300,6 +353,31 @@
     </div>
   </div>
   <div id="dateDisplay" style="position:fixed;top:20px;left:20px;z-index:1000;font-size:18px;font-weight:bold;"></div>
+  <!-- Follow Us Tab Content -->
+  <div id="followContent" style="display:none;">
+    <div class="follow-container">
+      <div class="follow-row" onclick="window.open('https://youtube.com/@ngr-rijan?si=Dkx6kBXwVBRMPovk','_blank')">
+        <span class="yt-animated-outline">YouTube</span>
+        <span class="yt-logo-svg" aria-label="YouTube">
+          <svg width="64" height="44" viewBox="0 0 64 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="6" width="60" height="32" rx="10" fill="#fff" stroke="#FF0000" stroke-width="4"/>
+            <rect x="2" y="6" width="60" height="32" rx="10" fill="url(#ytGrad)" fill-opacity="0.15"/>
+            <defs>
+              <linearGradient id="ytGrad" x1="0" y1="0" x2="64" y2="44" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FF0000"/>
+                <stop offset="1" stop-color="#FF9900"/>
+              </linearGradient>
+            </defs>
+            <polygon points="27,16 27,28 39,22" fill="#FF0000" stroke="#fff" stroke-width="2"/>
+          </svg>
+        </span>
+      </div>
+      <div class="follow-desc">
+        <span class="desc-title">We've reached <b>500 subscribers</b>!</span><br/>
+        <span class="desc-body">Thank you for your amazing support. <b>Something new and exciting is coming soon</b>—stay tuned and make sure to subscribe so you don't miss out!</span>
+      </div>
+    </div>
+  </div>
   <script>
     // 300+ cool gradients
     const ngrGradients = [
@@ -402,6 +480,8 @@
     const fileUploadForm = document.getElementById('fileUploadForm');
     const uploadMsg = document.getElementById('uploadMsg');
     const homeContent = document.getElementById('homeContent');
+    const followTab = document.getElementById('followTab');
+    const followContent = document.getElementById('followContent');
 
     function speak(text) {
       if ('speechSynthesis' in window) {
@@ -434,6 +514,7 @@
       homeContent.style.display = 'block';
       ngrAdmin.style.display = 'none';
       ngrPanel.style.display = 'none';
+      followContent.style.display = 'none';
       stopNgrBgCycle();
     });
     ngrTab.addEventListener('click', function() {
@@ -441,6 +522,14 @@
       ngrAdmin.style.display = 'block';
       ngrPanel.style.display = 'none';
       ngrBgFade.style.display = 'none';
+      followContent.style.display = 'none';
+      stopNgrBgCycle();
+    });
+    followTab.addEventListener('click', function() {
+      homeContent.style.display = 'none';
+      ngrAdmin.style.display = 'none';
+      ngrPanel.style.display = 'none';
+      followContent.style.display = 'block';
       stopNgrBgCycle();
     });
     ngrAdminForm.addEventListener('submit', function(e) {
@@ -494,6 +583,21 @@
     }
     setInterval(updateDate, 1000);
     updateDate();
+
+    // Animation sequence for watermark text
+    const anims = [
+      'ngr-fadein', 'ngr-shake', 'ngr-scale', 'ngr-rotate', 'ngr-fadeout', 'ngr-skew', 'ngr-blur', 'ngr-glow', 'ngr-slide', 'ngr-bounce', 'ngr-fadein', 'ngr-shake2'
+    ];
+    let animIdx = 0;
+    function nextAnim() {
+      document.querySelectorAll('.ngr-anim-text').forEach(el => {
+        anims.forEach(a => el.classList.remove(a));
+        el.classList.add(anims[animIdx]);
+      });
+      animIdx = (animIdx + 1) % anims.length;
+    }
+    setInterval(nextAnim, 10000);
+    nextAnim();
   </script>
 </body>
 </html> 

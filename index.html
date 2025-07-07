@@ -575,3 +575,17 @@
             < preocupado
 
 System: * Today's date and time is 03:23 PM +0545 on Monday, July 07, 2025.
+
+function login() {
+    const userId = document.getElementById('user-id').value;
+    const password = document.getElementById('password').value;
+    const error = document.getElementById('login-error');
+    if (userId === '1' && password === '2') {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('nav').style.display = 'block';
+        document.getElementById('home').classList.add('active');
+        error.style.display = 'none';
+    } else {
+        error.style.display = 'block';
+    }
+}

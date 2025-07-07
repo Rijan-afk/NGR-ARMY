@@ -18,17 +18,24 @@
         <button id="ttsClose" style="margin-left:8px;">Close</button>
         <div id="ttsStatus" style="margin-top:10px;color:#d00;"></div>
         <div id="ttsPlaying" style="display:none;margin-top:10px;color:#43cea2;font-weight:bold;">🔊 Playing...</div>
+        <div id="ttsSimulatedMsg" style="margin-top:10px;color:#ffd700;font-weight:bold;display:none;">This is a simulated ultra-realistic voice. For true AI voices, connect to a service like ElevenLabs.</div>
       </div>
     `;
     document.body.appendChild(modal);
   }
   // Always hide TTS modal on page load
   document.getElementById('ttsModal').style.display = 'none';
-  // Populate all Hindi voices, label 'Realistic' if Google/Natural
+  // Populate all Hindi voices, label 'Realistic' if Google/Natural, and add NGR Ultra Realistic
   function populateTtsVoices() {
     const ttsVoice = document.getElementById('ttsVoice');
     if (!ttsVoice) return;
     ttsVoice.innerHTML = '';
+    // Add custom NGR Ultra Realistic model
+    const ngrUltraOpt = document.createElement('option');
+    ngrUltraOpt.value = '__ngr_ultra_realistic__';
+    ngrUltraOpt.textContent = 'NGR Ultra Realistic (AI, ElevenLabs-like, Simulated)';
+    ngrUltraOpt.style.fontWeight = 'bold';
+    ttsVoice.appendChild(ngrUltraOpt);
     // Add custom NGR Hindi Ultra model
     const ngrOpt = document.createElement('option');
     ngrOpt.value = '__ngr_hindi_ultra__';
@@ -59,8 +66,33 @@
   // TTS logic
   document.getElementById('ttsGenerate').onclick = function() {
     document.getElementById('ttsStatus').textContent = 'Generating...';
+    document.getElementById('ttsSimulatedMsg').style.display = 'none';
     const text = document.getElementById('ttsText').value;
     const voiceName = document.getElementById('ttsVoice').value;
+    if (voiceName === '__ngr_ultra_realistic__') {
+      // Simulate NGR Ultra Realistic model
+      document.getElementById('ttsSimulatedMsg').style.display = 'block';
+      // Placeholder for future ElevenLabs or other API integration
+      // Example: fetch('/api/tts', {method:'POST', body: JSON.stringify({text, model:'ngr-ultra'})})
+      if ('speechSynthesis' in window && text) {
+        window.speechSynthesis.cancel();
+        const utter = new window.SpeechSynthesisUtterance('[NGR Ultra Realistic] ' + text);
+        utter.rate = 0.92;
+        utter.pitch = 1.18;
+        utter.lang = 'hi-IN';
+        utter.volume = 1;
+        document.getElementById('ttsPlaying').style.display = 'block';
+        utter.onend = utter.onerror = function() {
+          document.getElementById('ttsPlaying').style.display = 'none';
+          document.getElementById('ttsStatus').textContent = '';
+        };
+        window.speechSynthesis.speak(utter);
+        document.getElementById('ttsStatus').textContent = 'Using NGR Ultra Realistic (simulated)';
+      } else {
+        document.getElementById('ttsStatus').textContent = 'TTS not supported or no text.';
+      }
+      return;
+    }
     if (voiceName === '__ngr_hindi_ultra__') {
       // Simulate NGR Hindi Ultra model
       if ('speechSynthesis' in window && text) {

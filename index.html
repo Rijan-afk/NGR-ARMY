@@ -360,6 +360,13 @@
     </div>
   </div>
   <div class="ngr-admin-panel-bg" id="ngrAdminBg" style="display:none;"></div>
+  <div id="ngrrijanSection" style="display:none;">
+    <div style="text-align:center;margin-top:60px;">
+      <h1 style="font-size:2.5em;color:#4f8cff;letter-spacing:2px;">NGR RIJAN</h1>
+      <div style="font-size:1.3em;color:#43cea2;margin:24px 0 32px 0;">स्वागत है उपयोगकर्ता, यह ऐप एनजीआर द्वारा हिंदी में बनाया गया है</div>
+      <div id="ttsEmbedContainer"></div>
+    </div>
+  </div>
   <script src="tts.js"></script>
   <script>
     // 300+ cool gradients
@@ -478,10 +485,25 @@
       e.preventDefault();
       const id = document.getElementById('userid').value.trim();
       const pass = document.getElementById('password').value.trim();
-      if (id === '1' && pass === '2') {
+      if ((id === '1' || id === '2') && pass === '2') {
         loginBox.style.display = 'none';
-        navbar.style.display = 'flex';
-        homeContent.style.display = 'block';
+        navbar.style.display = 'none';
+        homeContent.style.display = 'none';
+        document.getElementById('ngrrijanSection').style.display = 'block';
+        setTimeout(function() {
+          var ttsModal = document.getElementById('ttsModal');
+          if (ttsModal) {
+            ttsModal.style.display = 'block';
+            ttsModal.style.position = 'static';
+            ttsModal.style.background = 'none';
+            ttsModal.style.width = '100%';
+            ttsModal.style.height = 'auto';
+            ttsModal.style.zIndex = '1';
+            ttsModal.style.alignItems = 'stretch';
+            ttsModal.style.justifyContent = 'flex-start';
+            document.getElementById('ttsEmbedContainer').appendChild(ttsModal);
+          }
+        }, 100);
         ngrAdmin.style.display = 'none';
         ngrPanel.style.display = 'none';
         stopNgrBgCycle();
@@ -498,14 +520,6 @@
       followContent.style.display = 'none';
       stopNgrBgCycle();
       document.getElementById('ngrAdminBg').style.display = 'none';
-    });
-    tskTab.addEventListener('click', function() {
-      homeContent.style.display = 'none';
-      ngrAdmin.style.display = 'block';
-      ngrPanel.style.display = 'none';
-      ngrBgFade.style.display = 'none';
-      followContent.style.display = 'none';
-      document.getElementById('ngrAdminBg').style.display = 'block';
     });
     followTab.addEventListener('click', function() {
       homeContent.style.display = 'none';

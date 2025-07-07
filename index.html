@@ -1,10 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Tags for SEO and Accessibility -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NGR RIJAN Hindi TTS Web App - A modern text-to-speech platform with resource links and YouTube integration.">
+    <meta name="keywords" content="Hindi TTS, text-to-speech, NGR RIJAN, resources, YouTube">
+    <meta name="author" content="NGR RIJAN Team">
     <title>NGR RIJAN - Hindi TTS Web App</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Google Fonts for Enhanced Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
+        /* ------------------------------------------ */
+        /* CSS Custom Properties for Theming */
+        /* ------------------------------------------ */
+        :root {
+            --primary-blue: #4f8cff;
+            --primary-green: #43cea2;
+            --accent-pink: #ff6ec4;
+            --accent-gold: #ffd700;
+            --youtube-red: #ff0000;
+            --bg-dark: #23233a;
+            --bg-light: #f5f5f5;
+            --text-dark: #fff;
+            --text-light: #23233a;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            --current-theme: dark;
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #f5f5f5;
+            --text-dark: #23233a;
+            --bg-light: #23233a;
+            --text-light: #fff;
+        }
+
+        /* ------------------------------------------ */
+        /* Base Styles */
+        /* ------------------------------------------ */
         * {
             margin: 0;
             padding: 0;
@@ -13,13 +51,15 @@
         }
 
         body {
-            background: #23233a;
-            color: #fff;
+            background: var(--bg-dark);
+            color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Animations */
+        /* ------------------------------------------ */
+        /* Animation Keyframes */
+        /* ------------------------------------------ */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -35,9 +75,22 @@
             to { transform: scale(4); opacity: 0; }
         }
 
-        /* Navigation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 5px var(--youtube-red)); }
+            50% { filter: drop-shadow(0 0 15px var(--youtube-red)); }
+            100% { filter: drop-shadow(0 0 5px var(--youtube-red)); }
+        }
+
+        /* ------------------------------------------ */
+        /* Navigation Styles */
+        /* ------------------------------------------ */
         nav {
-            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-green));
             padding: 1rem;
             position: sticky;
             top: 0;
@@ -48,6 +101,7 @@
             list-style: none;
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         nav ul li {
@@ -55,37 +109,40 @@
         }
 
         nav ul li a {
-            color: #fff;
+            color: var(--text-dark);
             text-decoration: none;
             font-weight: bold;
             padding: 0.5rem 1rem;
             border-radius: 5px;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.3s;
         }
 
         nav ul li a:hover, nav ul li a.active, nav ul li a:focus {
             background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
         }
 
-        /* Login Form */
+        /* ------------------------------------------ */
+        /* Login Form Styles */
+        /* ------------------------------------------ */
         #login-section {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #23233a;
+            background: var(--bg-dark);
+            animation: fadeIn 0.5s ease-in;
         }
 
         .login-form {
-            background: #fff;
-            color: #23233a;
+            background: var(--bg-light);
+            color: var(--text-light);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
             width: 100%;
             max-width: 400px;
             text-align: center;
-            animation: fadeIn 0.5s ease-in;
         }
 
         .login-form input {
@@ -99,8 +156,8 @@
         .login-form button {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(45deg, #4f8cff, #43cea2);
-            color: #fff;
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-green));
+            color: var(--text-dark);
             padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 5px;
@@ -120,7 +177,6 @@
             background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             transform: scale(0);
-            animation: ripple 0.6s linear;
             pointer-events: none;
         }
 
@@ -128,7 +184,9 @@
             animation: ripple 0.6s linear;
         }
 
-        /* Main Content */
+        /* ------------------------------------------ */
+        /* Main Content Styles */
+        /* ------------------------------------------ */
         .tab-content {
             display: none;
             padding: 2rem;
@@ -141,7 +199,9 @@
             display: block;
         }
 
-        /* Home Tab */
+        /* ------------------------------------------ */
+        /* Home Tab Styles */
+        /* ------------------------------------------ */
         #home {
             position: relative;
             text-align: center;
@@ -151,7 +211,7 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
             max-height: 80vh;
             overflow-y: auto;
             margin: 0 auto;
@@ -160,10 +220,11 @@
 
         .resource-item {
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .resource-item h3 {
-            color: #ffd700;
+            color: var(--accent-gold);
         }
 
         .resource-item p {
@@ -175,8 +236,8 @@
             position: relative;
             overflow: hidden;
             display: inline-block;
-            background: linear-gradient(45deg, #4f8cff, #43cea2);
-            color: #fff;
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-green));
+            color: var(--text-dark);
             padding: 0.5rem 1rem;
             border-radius: 5px;
             text-decoration: none;
@@ -195,12 +256,38 @@
             background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             transform: scale(0);
-            animation: ripple 0.6s linear;
             pointer-events: none;
         }
 
         .resource-item a:active::after {
             animation: ripple 0.6s linear;
+        }
+
+        /* Tooltip Styles */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background: var(--bg-light);
+            color: var(--text-light);
+            text-align: center;
+            border-radius: 5px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text, .tooltip:focus .tooltip-text {
+            visibility: visible;
+            opacity: 1;
         }
 
         /* Animated Watermark */
@@ -222,14 +309,16 @@
             letter-spacing: 10px;
         }
 
-        /* NGR RIJAN Tab */
+        /* ------------------------------------------ */
+        /* NGR RIJAN Tab Styles */
+        /* ------------------------------------------ */
         #ngr-rijan {
             text-align: center;
         }
 
         #ngr-rijan h2 {
             font-size: 2.5rem;
-            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
@@ -239,7 +328,7 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
             max-width: 600px;
             margin: 0 auto;
         }
@@ -258,8 +347,8 @@
             margin: 0.5rem;
             border-radius: 5px;
             border: none;
-            background: linear-gradient(45deg, #4f8cff, #43cea2);
-            color: #fff;
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-green));
+            color: var(--text-dark);
             cursor: pointer;
             transition: transform 0.3s;
         }
@@ -276,7 +365,6 @@
             background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             transform: scale(0);
-            animation: ripple 0.6s linear;
             pointer-events: none;
         }
 
@@ -287,17 +375,12 @@
         .tts-container .loader {
             display: none;
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #4f8cff;
+            border-top: 4px solid var(--primary-blue);
             border-radius: 50%;
             width: 20px;
             height: 20px;
             animation: spin 1s linear infinite;
             margin: 0.5rem auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         .tts-history {
@@ -315,16 +398,18 @@
             transition: background 0.3s;
         }
 
-        .tts-history-item:hover {
+        .tts-history-item:hover, .tts-history-item:focus {
             background: rgba(255, 255, 255, 0.1);
         }
 
         .tts-message {
-            color: #ff6ec4;
+            color: var(--accent-pink);
             margin-top: 0.5rem;
         }
 
-        /* Follow Us Tab */
+        /* ------------------------------------------ */
+        /* Follow Us Tab Styles */
+        /* ------------------------------------------ */
         #follow-us {
             text-align: center;
         }
@@ -339,7 +424,7 @@
         }
 
         .youtube-row:hover, .youtube-row:focus {
-            filter: drop-shadow(0 0 10px #ff0000);
+            animation: glow 1.5s infinite;
         }
 
         .youtube-row svg {
@@ -357,9 +442,9 @@
         }
 
         @keyframes strokeAnim {
-            0% { stroke: #ff0000; }
-            50% { stroke: #ffd700; }
-            100% { stroke: #ff0000; }
+            0% { stroke: var(--youtube-red); }
+            50% { stroke: var(--accent-gold); }
+            100% { stroke: var(--youtube-red); }
         }
 
         .youtube-row p {
@@ -368,9 +453,63 @@
             margin: 1rem auto;
         }
 
-        /* Footer */
+        /* ------------------------------------------ */
+        /* Additional Tab Styles */
+        /* ------------------------------------------ */
+        #about, #faq, #tutorials {
+            text-align: center;
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ------------------------------------------ */
+        /* Modal Styles */
+        /* ------------------------------------------ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: var(--bg-light);
+            color: var(--text-light);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .modal-content button {
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-green));
+            color: var(--text-dark);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* ------------------------------------------ */
+        /* Footer Styles */
+        /* ------------------------------------------ */
         footer {
-            background: #23233a;
+            background: var(--bg-dark);
             padding: 1rem;
             text-align: center;
             position: sticky;
@@ -379,7 +518,7 @@
         }
 
         footer a {
-            color: #4f8cff;
+            color: var(--primary-blue);
             text-decoration: none;
             margin: 0 1rem;
         }
@@ -388,7 +527,9 @@
             text-decoration: underline;
         }
 
+        /* ------------------------------------------ */
         /* Responsive Design */
+        /* ------------------------------------------ */
         @media (max-width: 768px) {
             nav ul {
                 flex-direction: column;
@@ -399,7 +540,7 @@
                 margin: 0.5rem 0;
             }
 
-            .resource-card, .tts-container {
+            .resource-card, .tts-container, .section-content {
                 padding: 1rem;
             }
 
@@ -409,8 +550,10 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="dark">
+    <!-- ------------------------------------------ -->
     <!-- Login Section -->
+    <!-- ------------------------------------------ -->
     <section id="login-section" aria-label="Login to NGR RIJAN">
         <div class="login-form">
             <h2>Login to NGR RIJAN</h2>
@@ -421,262 +564,14 @@
         </div>
     </section>
 
+    <!-- ------------------------------------------ -->
     <!-- Navigation -->
+    <!-- ------------------------------------------ -->
     <nav id="nav" style="display: none;" role="navigation">
         <ul>
             <li><a href="#home" class="active" onclick="showTab('home')" aria-label="Home Tab">Home</a></li>
             <li><a href="#ngr-rijan" onclick="showTab('ngr-rijan')" aria-label="NGR RIJAN Tab">NGR RIJAN</a></li>
             <li><a href="#follow-us" onclick="showTab('follow-us')" aria-label="Follow Us Tab">Follow Us!</a></li>
-        </ul>
-    </nav>
+            < preocupado
 
-    <!-- Home Tab -->
-    <section id="home" class="tab-content active" role="region" aria-label="Home Section">
-        <svg id="watermark" width="100%" height="100%">
-            <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#4f8cff;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#43cea2;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <text x="50%" y="50%" text-anchor="middle" dy=".3em">NGR RIJAN</text>
-        </svg>
-        <div class="resource-card">
-            <div class="resource-item">
-                <h3>Ninja Ripper</h3>
-                <p>Extract 3D models and textures from games with ease.</p>
-                <a href="https://www.mediafire.com/file/8lbld9z63j07ap2/NinjaRipper.exe/file" target="_blank" aria-label="Download Ninja Ripper">Open Link</a>
-            </div>
-            <div class="resource-item">
-                <h3>Noesis & Ninja Ripper 2-in-1</h3>
-                <p>All-in-one toolkit for model conversion and extraction.</p>
-                <a href="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" target="_blank" aria-label="Download Noesis & Ninja Ripper">Open Link</a>
-            </div>
-            <div class="resource-item">
-                <h3>Bandicam</h3>
-                <p>Record your screen in high quality for tutorials and gameplay.</p>
-                <a href="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" target="_blank" aria-label="Download Bandicam">Open Link</a>
-            </div>
-            <div class="resource-item">
-                <h3>Topaz Video AI Latest Version</h3>
-                <p>Latest version of Topaz Video AI Pro.</p>
-                <a href="https://www.mediafire.com/file/2vbhi4ce146gxzo/Topaz+Video+AI+Pro+7.0.3+(x64)+[FileCR].rar/file" target="_blank" aria-label="Download Topaz Video AI">Open Link</a>
-            </div>
-            <div class="resource-item">
-                <h3>Protected Private for Only NGR</h3>
-                <p>Password-protected resource (password: NGR).</p>
-                <a href="https://www.mediafire.com/file/zonnw7j1lp67s2z/a+an+top+edit.rar/file" target="_blank" aria-label="Download Protected Private Resource">Open Link</a>
-            </div>
-            <div class="resource-item">
-                <h3>Medice</h3>
-                <p>Medicine-related resource.</p>
-                <a href="https://www.mediafire.com/file/jwmil38minzygqn/Medicine.rar/file" target="_blank" aria-label="Download Medice Resource">Open Link</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- NGR RIJAN Tab -->
-    <section id="ngr-rijan" class="tab-content" role="region" aria-label="NGR RIJAN TTS Section">
-        <h2>NGR RIJAN</h2>
-        <p>स्वागत है उपयोगकर्ता, यह ऐप एनजीआर द्वारा हिंदी में बनाया गया है</p>
-        <div class="tts-container">
-            <textarea id="tts-text" placeholder="Enter text to speak in Hindi" aria-label="Text to speak"></textarea>
-            <select id="voice-select" aria-label="Select voice"></select>
-            <div>
-                <label for="volume">Volume:</label>
-                <input type="range" id="volume" min="0" max="1" step="0.1" value="1" aria-label="Volume control">
-            </div>
-            <div>
-                <label for="speed">Speed:</label>
-                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1" aria-label="Speed control">
-            </div>
-            <button onclick="speak()" aria-label="Speak text">Speak</button>
-            <button onclick="stopSpeech()" aria-label="Stop speech">Stop</button>
-            <div class="loader" id="tts-loader"></div>
-            <p id="tts-status" aria-live="polite">Status: Ready</p>
-            <p id="tts-message" aria-live="polite"></p>
-            <div class="tts-history" id="tts-history" aria-label="TTS history">
-                <h3>Recent TTS Inputs</h3>
-            </div>
-        </div>
-    </section>
-
-    <!-- Follow Us Tab -->
-    <section id="follow-us" class="tab-content" role="region" aria-label="Follow Us Section">
-        <div class="youtube-row" onclick="window.open('https://youtube.com/@ngr-rijan?si=Dkx6kBXwVBRMPovk', '_blank')" role="button" tabindex="0" aria-label="Follow us on YouTube">
-            <svg viewBox="0 0 100 100">
-                <defs>
-                    <linearGradient id="youtubeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#ff0000;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#ffd700;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <path d="M90 30s-2-10-10-12c-10-2-50-2-50-2s-40 0-50 2c-8 2-10 12-10 12s0 20 0 30 2 20 10 22c10 2 50 2 50 2s40 0 50-2c8-2 10-12 10-12s0-20 0-30z" fill="#ff0000"/>
-                <path d="M40 70l30-20-30-20v40z" fill="#fff"/>
-                <text x="10" y="90" font-size="20">YouTube</text>
-            </svg>
-            <h3>Follow Us on YouTube</h3>
-        </div>
-        <p>We're on the road to 500 subscribers! Help us reach our goal. Something new and exciting is coming soon—stay tuned and make sure to subscribe so you don't miss out!</p>
-    </section>
-
-    <!-- Footer -->
-    <footer role="contentinfo">
-        <p>&copy; 2025 NGR RIJAN | <a href="#" aria-label="Privacy Policy">Privacy Policy</a> | <a href="#" aria-label="Contact Us">Contact Us</a></p>
-    </footer>
-
-    <script>
-        // Tab Navigation
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('nav ul li a').forEach(link => link.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.querySelector(`nav ul li a[href="#${tabId}"]`).classList.add('active');
-        }
-
-        // Login System
-        function login() {
-            const userId = document.getElementById('user-id').value;
-            const password = document.getElementById('password').value;
-            const error = document.getElementById('login-error');
-            if ((userId === '1' || userId === '2') && password === '2') {
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('nav').style.display = 'block';
-                document.getElementById('home').classList.add('active');
-                error.style.display = 'none';
-            } else {
-                error.style.display = 'block';
-            }
-        }
-
-        // TTS System
-        const synth = window.speechSynthesis;
-        let voices = [];
-        const ttsHistory = JSON.parse(localStorage.getItem('ttsHistory')) || [];
-
-        function populateVoices() {
-            voices = synth.getVoices();
-            const voiceSelect = document.getElementById('voice-select');
-            voiceSelect.innerHTML = '';
-            voices.forEach(voice => {
-                if (voice.lang.includes('hi-IN') || voice.name.toLowerCase().includes('hindi')) {
-                    const option = document.createElement('option');
-                    option.value = voice.name;
-                    option.text = `${voice.name}${voice.name.includes('Google') || voice.name.includes('Natural') ? ' (Realistic)' : ''}`;
-                    voiceSelect.appendChild(option);
-                }
-            });
-
-            // Add custom voices
-            const customVoices = [
-                { name: 'NGR Hindi Ultra (Custom Model)', value: 'ngr-ultra' },
-                { name: 'NGR Ultra Realistic (AI, ElevenLabs-like, Simulated)', value: 'ngr-ultra-realistic' }
-            ];
-            customVoices.forEach(custom => {
-                const option = document.createElement('option');
-                option.value = custom.value;
-                option.text = custom.name;
-                voiceSelect.appendChild(option);
-            });
-        }
-
-        function speak() {
-            const text = document.getElementById('tts-text').value;
-            const voiceSelect = document.getElementById('voice-select').value;
-            const volume = document.getElementById('volume').value;
-            const speed = document.getElementById('speed').value;
-            const status = document.getElementById('tts-status');
-            const message = document.getElementById('tts-message');
-            const loader = document.getElementById('tts-loader');
-
-            if (!text) {
-                status.textContent = 'Status: Please enter text';
-                return;
-            }
-
-            loader.style.display = 'block';
-            status.textContent = 'Status: Processing...';
-
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.volume = volume;
-            utterance.rate = speed;
-
-            if (voiceSelect.startsWith('ngr-')) {
-                message.textContent = 'This is a simulated ultra-realistic voice. For true AI voices, connect to a service like ElevenLabs.';
-                const hindiVoice = voices.find(v => v.lang.includes('hi-IN')) || voices[0];
-                utterance.voice = hindiVoice;
-                utterance.pitch = voiceSelect === 'ngr-ultra' ? 1.2 : 1.5;
-                utterance.rate = voiceSelect === 'ngr-ultra' ? 0.9 : 0.8;
-            } else {
-                message.textContent = '';
-                utterance.voice = voices.find(v => v.name === voiceSelect);
-            }
-
-            synth.speak(utterance);
-            status.textContent = 'Status: Playing...';
-            loader.style.display = 'none';
-
-            // Save to history
-            if (!ttsHistory.includes(text)) {
-                ttsHistory.unshift(text);
-                if (ttsHistory.length > 5) ttsHistory.pop();
-                localStorage.setItem('ttsHistory', JSON.stringify(ttsHistory));
-                updateHistory();
-            }
-
-            utterance.onend = () => {
-                status.textContent = 'Status: Ready';
-                loader.style.display = 'none';
-            };
-        }
-
-        function stopSpeech() {
-            synth.cancel();
-            document.getElementById('tts-status').textContent = 'Status: Stopped';
-            document.getElementById('tts-loader').style.display = 'none';
-        }
-
-        function updateHistory() {
-            const historyDiv = document.getElementById('tts-history');
-            historyDiv.innerHTML = '<h3>Recent TTS Inputs</h3>';
-            ttsHistory.forEach(text => {
-                const div = document.createElement('div');
-                div.className = 'tts-history-item';
-                div.textContent = text;
-                div.setAttribute('tabindex', '0');
-                div.setAttribute('role', 'button');
-                div.setAttribute('aria-label', `Replay text: ${text}`);
-                div.onclick = () => {
-                    document.getElementById('tts-text').value = text;
-                    speak();
-                };
-                div.onkeydown = e => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        document.getElementById('tts-text').value = text;
-                        speak();
-                    }
-                };
-                historyDiv.appendChild(div);
-            });
-        }
-
-        // Initialize voices and history
-        synth.onvoiceschanged = () => {
-            populateVoices();
-            updateHistory();
-        };
-        populateVoices();
-        updateHistory();
-
-        // Keyboard navigation for YouTube row
-        document.querySelector('.youtube-row').onkeydown = e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                window.open('https://youtube.com/@ngr-rijan?si=Dkx6kBXwVBRMPovk', '_blank');
-            }
-        };
-
-        // Show home tab by default
-        showTab('home');
-    </script>
-</body>
-</html>
+System: * Today's date and time is 03:23 PM +0545 on Monday, July 07, 2025.

@@ -1,0 +1,183 @@
+body {
+  background: linear-gradient(135deg, #23233a 0%, #4f8cff 100%);
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.animated-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.animated-bg span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: float 8s infinite linear;
+}
+
+.animated-bg .circle1 {
+  width: 180px; height: 180px;
+  background: linear-gradient(135deg, #4f8cff 60%, #43cea2 100%);
+  left: 10vw; top: 10vh;
+  animation-delay: 0s;
+}
+.animated-bg .circle2 {
+  width: 120px; height: 120px;
+  background: linear-gradient(135deg, #43cea2 60%, #4f8cff 100%);
+  right: 12vw; top: 20vh;
+  animation-delay: 2s;
+}
+.animated-bg .circle3 {
+  width: 90px; height: 90px;
+  background: linear-gradient(135deg, #ffb347 60%, #ffcc33 100%);
+  left: 20vw; bottom: 10vh;
+  animation-delay: 4s;
+}
+.animated-bg .circle4 {
+  width: 140px; height: 140px;
+  background: linear-gradient(135deg, #ff4c4c 60%, #4f8cff 100%);
+  right: 18vw; bottom: 8vh;
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-40px) scale(1.1); opacity: 0.7; }
+  100% { transform: translateY(0) scale(1); opacity: 0.5; }
+}
+
+.login-container {
+  background: rgba(30, 30, 47, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  padding: 48px 36px 36px 36px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 1s;
+  z-index: 1;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.login-title {
+  font-size: 2.2rem;
+  color: #4f8cff;
+  font-weight: bold;
+  margin-bottom: 18px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #0002;
+}
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.login-form input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #23233a;
+  color: #fff;
+  font-size: 1.1rem;
+  outline: none;
+  box-shadow: 0 2px 8px #0001;
+  transition: background 0.2s;
+}
+.login-form input:focus {
+  background: #2e2e4d;
+}
+.login-btn {
+  background: linear-gradient(90deg, #4f8cff, #43cea2);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  margin-top: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #4f8cff44;
+  transition: background 0.2s, transform 0.1s;
+}
+.login-btn:active {
+  transform: scale(0.97);
+}
+.error-message {
+  color: #ff4c4c;
+  font-size: 1rem;
+  margin-top: 4px;
+  min-height: 22px;
+  text-align: center;
+  letter-spacing: 1px;
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+.navbar {
+  width: 100vw;
+  background: rgba(30, 30, 47, 0.98);
+  box-shadow: 0 2px 12px #0002;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  animation: fadeIn 1s;
+}
+.nav-home {
+  color: #fff;
+  background: linear-gradient(90deg, #4f8cff, #43cea2);
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 8px 32px;
+  margin: 0 12px;
+  box-shadow: 0 2px 8px #4f8cff44;
+  letter-spacing: 2px;
+  border: none;
+  outline: none;
+  transition: background 0.2s, color 0.2s;
+  text-shadow: 0 2px 8px #0002;
+  cursor: pointer;
+}
+.nav-home:active {
+  background: linear-gradient(90deg, #43cea2, #4f8cff);
+  color: #23233a;
+}
+.under-working {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-top: 120px;
+  animation: fadeIn 1s;
+  text-shadow: 0 2px 8px #0004;
+}
+@media (max-width: 600px) {
+  .login-container { width: 95vw; padding: 32px 8vw; }
+  .navbar { font-size: 1rem; }
+  .nav-home { padding: 8px 16px; font-size: 1rem; }
+  .under-working { font-size: 1.2rem; margin-top: 90px; }
+} 

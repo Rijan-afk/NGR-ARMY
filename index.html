@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Advanced UI</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       background: linear-gradient(135deg, #23233a 0%, #4f8cff 100%);
@@ -142,6 +143,12 @@
   </style>
 </head>
 <body>
+  <div class="animated-bg">
+    <span class="circle1"></span>
+    <span class="circle2"></span>
+    <span class="circle3"></span>
+    <span class="circle4"></span>
+  </div>
   <div class="login-container" id="loginBox">
     <div class="login-title">Sign In</div>
     <form class="login-form" id="loginForm" autocomplete="off">
@@ -161,6 +168,16 @@
     const loginBox = document.getElementById('loginBox');
     const underWorking = document.getElementById('underWorking');
     const navbar = document.getElementById('navbar');
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // Stop any previous
+        const utter = new window.SpeechSynthesisUtterance(text);
+        utter.rate = 1.05;
+        utter.pitch = 1.1;
+        utter.lang = 'en-US';
+        window.speechSynthesis.speak(utter);
+      }
+    }
     loginForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const id = document.getElementById('userid').value.trim();
@@ -169,6 +186,7 @@
         loginBox.style.display = 'none';
         navbar.style.display = 'flex';
         underWorking.style.display = 'block';
+        speak('Welcome to N G R Rijan Web');
       } else {
         errorMsg.textContent = 'Invalid ID or Password';
         setTimeout(() => errorMsg.textContent = '', 1500);

@@ -24,7 +24,7 @@
   }
   // Always hide TTS modal on page load
   document.getElementById('ttsModal').style.display = 'none';
-  // Populate only Google Hindi voices + custom NGR model
+  // Populate all Hindi voices, label 'Realistic' if Google/Natural
   function populateTtsVoices() {
     const ttsVoice = document.getElementById('ttsVoice');
     if (!ttsVoice) return;
@@ -35,16 +35,20 @@
     ngrOpt.textContent = 'NGR Hindi Ultra (Custom Model)';
     ngrOpt.style.fontWeight = 'bold';
     ttsVoice.appendChild(ngrOpt);
-    // Add Google Hindi voices
+    // Add all Hindi voices
     let voices = window.speechSynthesis.getVoices();
-    voices = voices.filter(v => v.name.toLowerCase().includes('google hindi'));
+    voices = voices.filter(v => v.lang.toLowerCase() === 'hi-in' || v.name.toLowerCase().includes('hindi'));
     voices.forEach((voice, i) => {
       const opt = document.createElement('option');
       let gender = 'Unknown';
       if (voice.name.toLowerCase().includes('female')) gender = 'Female';
       if (voice.name.toLowerCase().includes('male')) gender = 'Male';
+      let label = voice.name;
+      if (voice.name.toLowerCase().includes('google') || voice.name.toLowerCase().includes('natural')) {
+        label += ' (Realistic)';
+      }
       opt.value = voice.name;
-      opt.textContent = `${voice.name} (${gender})`;
+      opt.textContent = `${label} (${gender})`;
       ttsVoice.appendChild(opt);
     });
   }

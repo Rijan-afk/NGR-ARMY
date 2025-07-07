@@ -22,6 +22,8 @@
     `;
     document.body.appendChild(modal);
   }
+  // Always hide TTS modal on page load
+  document.getElementById('ttsModal').style.display = 'none';
   // Populate only Google Hindi voices + custom NGR model
   function populateTtsVoices() {
     const ttsVoice = document.getElementById('ttsVoice');
@@ -98,6 +100,7 @@
   document.getElementById('ttsClose').onclick = function() {
     document.getElementById('ttsModal').style.display = 'none';
   };
+  // Only show TTS modal via this function
   window.showTTSModal = function() {
     document.getElementById('ttsModal').style.display = 'flex';
     populateTtsVoices();

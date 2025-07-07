@@ -1,598 +1,682 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Advanced UI</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(135deg, #23233a 0%, #4f8cff 100%);
-      min-height: 100vh;
-      margin: 0;
-      font-family: 'Montserrat', 'Segoe UI', 'Arial', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .login-container {
-      background: rgba(30, 30, 47, 0.95);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-      padding: 48px 36px 36px 36px;
-      width: 350px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeIn 1s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .login-title {
-      font-size: 2.2rem;
-      color: #4f8cff;
-      font-weight: bold;
-      margin-bottom: 18px;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 8px #0002;
-    }
-    .login-form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-    .login-form input {
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: none;
-      background: #23233a;
-      color: #fff;
-      font-size: 1.1rem;
-      outline: none;
-      box-shadow: 0 2px 8px #0001;
-      transition: background 0.2s;
-    }
-    .login-form input:focus {
-      background: #2e2e4d;
-    }
-    .login-btn {
-      background: linear-gradient(90deg, #4f8cff, #43cea2);
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 0;
-      margin-top: 8px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px #4f8cff44;
-      transition: background 0.2s, transform 0.1s;
-    }
-    .login-btn:active {
-      transform: scale(0.97);
-    }
-    .error-message {
-      color: #ff4c4c;
-      font-size: 1rem;
-      margin-top: 4px;
-      min-height: 22px;
-      text-align: center;
-      letter-spacing: 1px;
-      animation: shake 0.3s;
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-    .navbar {
-      width: 100vw;
-      background: rgba(30, 30, 47, 0.98);
-      box-shadow: 0 2px 12px #0002;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0.5rem 0;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 10;
-      animation: fadeIn 1s;
-    }
-    .nav-home {
-      color: #fff;
-      background: linear-gradient(90deg, #4f8cff, #43cea2);
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 12px;
-      padding: 8px 32px;
-      margin: 0 12px;
-      box-shadow: 0 2px 8px #4f8cff44;
-      letter-spacing: 2px;
-      border: none;
-      outline: none;
-      transition: background 0.2s, color 0.2s;
-      text-shadow: 0 2px 8px #0002;
-      cursor: pointer;
-    }
-    .nav-home:active {
-      background: linear-gradient(90deg, #43cea2, #4f8cff);
-      color: #23233a;
-    }
-    .nav-ngrrijan {
-      color: #fff;
-      background: linear-gradient(90deg, #4f8cff, #43cea2);
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 12px;
-      padding: 8px 32px;
-      margin: 0 12px;
-      box-shadow: 0 2px 8px #4f8cff44;
-      letter-spacing: 2px;
-      border: none;
-      outline: none;
-      transition: background 0.2s, color 0.2s;
-      text-shadow: 0 2px 8px #0002;
-      cursor: pointer;
-    }
-    .nav-ngrrijan:active {
-      background: linear-gradient(90deg, #43cea2, #4f8cff);
-      color: #23233a;
-    }
-    .nav-follow {
-      color: #fff;
-      background: linear-gradient(90deg, #4f8cff, #43cea2);
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 12px;
-      padding: 8px 32px;
-      margin: 0 12px;
-      box-shadow: 0 2px 8px #4f8cff44;
-      letter-spacing: 2px;
-      border: none;
-      outline: none;
-      transition: background 0.2s, color 0.2s;
-      text-shadow: 0 2px 8px #0002;
-      cursor: pointer;
-    }
-    .nav-follow:active {
-      background: linear-gradient(90deg, #43cea2, #4f8cff);
-      color: #23233a;
-    }
-    .under-working {
-      color: #fff;
-      font-size: 2rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-align: center;
-      margin-top: 120px;
-      animation: fadeIn 1s;
-      text-shadow: 0 2px 8px #0004;
-    }
-    @media (max-width: 600px) {
-      .login-container { width: 95vw; padding: 32px 8vw; }
-      .navbar { font-size: 1rem; }
-      .nav-home { padding: 8px 16px; font-size: 1rem; }
-      .nav-ngrrijan { padding: 8px 16px; font-size: 1rem; }
-      .nav-follow { padding: 8px 16px; font-size: 1rem; }
-      .under-working { font-size: 1.2rem; margin-top: 90px; }
-    }
-    .ngr-bg-fade {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 1.5s;
-    }
-    .ngr-bg-fade.active {
-      opacity: 1;
-      transition: opacity 1.5s;
-    }
-    .ngr-admin-panel .info-row {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 18px;
-      gap: 8px;
-    }
-    .ngr-admin-panel .info-label {
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: 500;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 8px #0004;
-    }
-    .ngr-admin-panel .tts-btn {
-      background: linear-gradient(90deg, #43cea2, #4f8cff);
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 24px;
-      margin-top: 8px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px #4f8cff44;
-      transition: background 0.2s, transform 0.1s;
-      outline: none;
-    }
-    .ngr-admin-panel .tts-btn:active {
-      background: linear-gradient(90deg, #4f8cff, #43cea2);
-      color: #23233a;
-      transform: scale(0.97);
-    }
-    .ngr-admin-panel-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      background: linear-gradient(120deg, #23233a 0%, #4f8cff 60%, #43cea2 100%);
-      opacity: 0.18;
-      animation: ngrAdminBgAnim 12s linear infinite alternate;
-    }
-    @keyframes ngrAdminBgAnim {
-      0% { filter: blur(0px) brightness(1); }
-      100% { filter: blur(2px) brightness(1.1); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGR RIJAN - Hindi TTS Web App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #23233a;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.05); opacity: 0.15; }
+            100% { transform: scale(1); opacity: 0.1; }
+        }
+
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.active, nav ul li a:focus {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Login Form */
+        #login-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #23233a;
+        }
+
+        .login-form {
+            background: #fff;
+            color: #23233a;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-form button {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .login-form button:hover, .login-form button:focus {
+            transform: scale(1.05);
+        }
+
+        .login-form button::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        .login-form button:active::after {
+            animation: ripple 0.6s linear;
+        }
+
+        /* Main Content */
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Home Tab */
+        #home {
+            position: relative;
+            text-align: center;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-height: 80vh;
+            overflow-y: auto;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .resource-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-item h3 {
+            color: #ffd700;
+        }
+
+        .resource-item p {
+            color: #ccc;
+            margin: 0.5rem 0;
+        }
+
+        .resource-item a {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .resource-item a:hover, .resource-item a:focus {
+            transform: scale(1.05);
+        }
+
+        .resource-item a::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        .resource-item a:active::after {
+            animation: ripple 0.6s linear;
+        }
+
+        /* Animated Watermark */
+        #watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            animation: pulse 3s infinite;
+        }
+
+        #watermark text {
+            font-size: 100px;
+            font-weight: bold;
+            fill: none;
+            stroke: url(#gradient);
+            stroke-width: 2;
+            letter-spacing: 10px;
+        }
+
+        /* NGR RIJAN Tab */
+        #ngr-rijan {
+            text-align: center;
+        }
+
+        #ngr-rijan h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .tts-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tts-container textarea {
+            width: 100%;
+            height: 100px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .tts-container select, .tts-container button, .tts-container input[type="range"] {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .tts-container select:hover, .tts-container button:hover, .tts-container input[type="range"]:hover {
+            transform: scale(1.05);
+        }
+
+        .tts-container button::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        .tts-container button:active::after {
+            animation: ripple 0.6s linear;
+        }
+
+        .tts-container .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4f8cff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0.5rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tts-history {
+            margin-top: 1rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .tts-history-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .tts-history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tts-message {
+            color: #ff6ec4;
+            margin-top: 0.5rem;
+        }
+
+        /* Follow Us Tab */
+        #follow-us {
+            text-align: center;
+        }
+
+        .youtube-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            cursor: pointer;
+            transition: filter 0.3s;
+        }
+
+        .youtube-row:hover, .youtube-row:focus {
+            filter: drop-shadow(0 0 10px #ff0000);
+        }
+
+        .youtube-row svg {
+            width: 50px;
+            height: 50px;
+            margin-right: 1rem;
+        }
+
+        .youtube-row text {
+            font-size: 1.5rem;
+            fill: none;
+            stroke: url(#youtubeGradient);
+            stroke-width: 2;
+            animation: strokeAnim 3s infinite;
+        }
+
+        @keyframes strokeAnim {
+            0% { stroke: #ff0000; }
+            50% { stroke: #ffd700; }
+            100% { stroke: #ff0000; }
+        }
+
+        .youtube-row p {
+            color: #ccc;
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+
+        /* Footer */
+        footer {
+            background: #23233a;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            bottom: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer a {
+            color: #4f8cff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        footer a:hover, footer a:focus {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .resource-card, .tts-container {
+                padding: 1rem;
+            }
+
+            #watermark text {
+                font-size: 50px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="login-container" id="loginBox">
-    <div class="login-title">Sign In</div>
-    <form class="login-form" id="loginForm" autocomplete="off">
-      <input type="text" id="userid" placeholder="User ID" required autofocus />
-      <input type="password" id="password" placeholder="Password" required />
-      <button class="login-btn" type="submit">Login</button>
-      <div class="error-message" id="errorMsg"></div>
-    </form>
-  </div>
-  <div class="navbar" id="navbar" style="display:none;">
-    <button class="nav-home" id="homeTab">Home</button>
-    <button class="nav-ngrrijan" id="ngrrijanTab">NGR RIJAN</button>
-    <button class="nav-follow" id="followTab">Follow Us!</button>
-  </div>
-  <!-- Home Content Wrapper -->
-  <div id="homeContent" style="display:none;">
-    <div class="ngr-gradient-bg"></div>
-    <svg class="ngr-watermark-svg" viewBox="0 0 1200 900" width="100%" height="100%">
-      <defs>
-        <linearGradient id="ngrFillGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#4f8cff">
-            <animate attributeName="stop-color" values="#4f8cff;#43cea2;#ff6ec4;#4f8cff" dur="8s" repeatCount="indefinite" />
-          </stop>
-          <stop offset="100%" stop-color="#ff6ec4">
-            <animate attributeName="stop-color" values="#ff6ec4;#43cea2;#4f8cff;#ff6ec4" dur="8s" repeatCount="indefinite" />
-          </stop>
-        </linearGradient>
-      </defs>
-      <text class="ngr-anim-text" x="50%" y="38%" text-anchor="middle" font-size="180" font-family="Montserrat, Arial, sans-serif" fill="url(#ngrFillGradient)" fill-opacity="0.45" stroke="#fff" stroke-width="18" style="paint-order:stroke;letter-spacing:40px;opacity:0.9;">NGR</text>
-      <text class="ngr-anim-text" x="50%" y="68%" text-anchor="middle" font-size="180" font-family="Montserrat, Arial, sans-serif" fill="url(#ngrFillGradient)" fill-opacity="0.45" stroke="#fff" stroke-width="18" style="paint-order:stroke;letter-spacing:40px;opacity:0.9;">RIJAN</text>
-    </svg>
-    <div id="homeLinksContainer" class="home-links-rect">
-      <div id="homeLinks" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;gap:40px;padding:24px 0;">
-        <div style="text-align:center;">
-          <span style="font-size:2em;font-weight:bold;color:#4f8cff;">Ninja Ripper</span><br/>
-          <span style="font-size:1.1em;color:#b0b8d1;">Extract 3D models and textures from games with ease.</span><br/>
-          <button onclick="window.open('https://www.mediafire.com/file/8lbld9z63j07ap2/NinjaRipper.exe/file','_blank')" style="margin-top:10px;font-size:1em;padding:8px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#4f8cff,#43cea2);color:#fff;font-weight:600;cursor:pointer;">Open Link</button>
+    <!-- Login Section -->
+    <section id="login-section" aria-label="Login to NGR RIJAN">
+        <div class="login-form">
+            <h2>Login to NGR RIJAN</h2>
+            <input type="text" id="user-id" placeholder="User ID (1 or 2)" aria-label="User ID" required>
+            <input type="password" id="password" placeholder="Password (2)" aria-label="Password" required>
+            <button onclick="login()" aria-label="Login">Login</button>
+            <p id="login-error" style="color: red; display: none;">Invalid User ID or Password</p>
         </div>
-        <div style="text-align:center;">
-          <span style="font-size:2em;font-weight:bold;color:#43cea2;">Noesis & Ninja Ripper 2-in-1</span><br/>
-          <span style="font-size:1.1em;color:#b0b8d1;">All-in-one toolkit for model conversion and extraction.</span><br/>
-          <button onclick="window.open('https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file','_blank')" style="margin-top:10px;font-size:1em;padding:8px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#43cea2,#4f8cff);color:#fff;font-weight:600;cursor:pointer;">Open Link</button>
-        </div>
-        <div style="text-align:center;">
-          <span style="font-size:2em;font-weight:bold;color:#7873f5;">Bandicam</span><br/>
-          <span style="font-size:1.1em;color:#b0b8d1;">Record your screen in high quality for tutorials and gameplay.</span><br/>
-          <button onclick="window.open('https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file','_blank')" style="margin-top:10px;font-size:1em;padding:8px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#7873f5,#ff6ec4);color:#fff;font-weight:600;cursor:pointer;">Open Link</button>
-        </div>
-        <div style="text-align:center;">
-          <span style="font-size:2em;font-weight:bold;color:#ff6ec4;">Topaz Video Ai Latest Version</span><br/>
-          <button onclick="window.open('https://www.mediafire.com/file/2vbhi4ce146gxzo/Topaz+Video+AI+Pro+7.0.3+(x64)+[FileCR].rar/file','_blank')" style="margin-top:10px;font-size:1em;padding:8px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#ff6ec4,#4f8cff);color:#fff;font-weight:600;cursor:pointer;">Open Link</button>
-        </div>
-        <div style="text-align:center;">
-          <span style="font-size:2em;font-weight:bold;color:#e67e22;">Protected Private for Only NGR</span><br/>
-          <button onclick="
-            var pass = prompt('Enter password to open this link:');
-            if(pass === 'NGR') {
-              window.open('https://www.mediafire.com/file/zonnw7j1lp67s2z/a+an+top+edit.rar/file','_blank');
-            } else if(pass !== null) {
-              alert('Incorrect password!');
-            }
-          " style="margin-top:10px;font-size:1em;padding:8px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#e67e22,#4f8cff);color:#fff;font-weight:600;cursor:pointer;">Open Link</button>
-        </div>
-        <div style="text-align:center;">
-          <span style="font-size:2em;font-weight:bold;color:#43cea2;">medice</span><br/>
-          <button onclick="window.open('https://www.mediafire.com/file/jwmil38minzygqn/Medicine.rar/file','_blank')" style="margin-top:10px;font-size:1em;padding:8px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#43cea2,#ff6ec4);color:#fff;font-weight:600;cursor:pointer;">Open Link</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="ngr-admin-container" id="ngrAdmin" style="display:none;">
-    <div class="login-title">NGR Admin Login</div>
-    <form class="login-form" id="ngrAdminForm" autocomplete="off">
-      <input type="text" id="ngrAdminId" placeholder="Admin ID" required />
-      <input type="password" id="ngrAdminPass" placeholder="Admin Password" required />
-      <button class="login-btn" type="submit">Login as Admin</button>
-      <div class="error-message" id="ngrAdminError"></div>
-    </form>
-  </div>
-  <div class="ngr-bg-fade" id="ngrBgFade"></div>
-  <div class="ngr-admin-panel" id="ngrPanel" style="display:none;">
-    <div class="login-title">NGR Admin Panel</div>
-    <div class="info-row">
-      <div class="info-label">Time: <span id="currentTime"></span></div>
-      <div class="info-label">Date: <span id="currentDate"></span></div>
-      <div class="info-label">Nepali Date: <span id="nepaliDate"></span></div>
-      <button class="tts-btn" id="ttsBtn">🔊 Speak Info</button>
-    </div>
-  </div>
-  <div id="dateDisplay" style="position:fixed;top:20px;left:20px;z-index:1000;font-size:18px;font-weight:bold;"></div>
-  <!-- Follow Us Tab Content -->
-  <div id="followContent" style="display:none;">
-    <div class="follow-container">
-      <div class="follow-row" onclick="window.open('https://youtube.com/@ngr-rijan?si=Dkx6kBXwVBRMPovk','_blank')">
-        <span class="yt-animated-outline">YouTube</span>
-        <span class="yt-logo-svg" aria-label="YouTube">
-          <svg width="64" height="44" viewBox="0 0 64 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="6" width="60" height="32" rx="10" fill="#fff" stroke="#FF0000" stroke-width="4"/>
-            <rect x="2" y="6" width="60" height="32" rx="10" fill="url(#ytGrad)" fill-opacity="0.15"/>
+    </section>
+
+    <!-- Navigation -->
+    <nav id="nav" style="display: none;" role="navigation">
+        <ul>
+            <li><a href="#home" class="active" onclick="showTab('home')" aria-label="Home Tab">Home</a></li>
+            <li><a href="#ngr-rijan" onclick="showTab('ngr-rijan')" aria-label="NGR RIJAN Tab">NGR RIJAN</a></li>
+            <li><a href="#follow-us" onclick="showTab('follow-us')" aria-label="Follow Us Tab">Follow Us!</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Tab -->
+    <section id="home" class="tab-content active" role="region" aria-label="Home Section">
+        <svg id="watermark" width="100%" height="100%">
             <defs>
-              <linearGradient id="ytGrad" x1="0" y1="0" x2="64" y2="44" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FF0000"/>
-                <stop offset="1" stop-color="#FF9900"/>
-              </linearGradient>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#4f8cff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#43cea2;stop-opacity:1" />
+                </linearGradient>
             </defs>
-            <polygon points="27,16 27,28 39,22" fill="#FF0000" stroke="#fff" stroke-width="2"/>
-          </svg>
-        </span>
-      </div>
-      <div class="follow-desc">
-        <span class="desc-title">We're on the road to <b>500 subscribers</b>!</span><br/>
-        <span class="desc-body">Help us reach our goal. <b>Something new and exciting is coming soon</b>—stay tuned and make sure to subscribe so you don't miss out!</span>
-      </div>
-    </div>
-  </div>
-  <div class="ngr-admin-panel-bg" id="ngrAdminBg" style="display:none;"></div>
-  <div id="ngrrijanSection" style="display:none;">
-    <div style="text-align:center;margin-top:60px;">
-      <h1 style="font-size:2.5em;color:#4f8cff;letter-spacing:2px;">NGR RIJAN</h1>
-      <div style="font-size:1.3em;color:#43cea2;margin:24px 0 32px 0;">स्वागत है उपयोगकर्ता, यह ऐप एनजीआर द्वारा हिंदी में बनाया गया है</div>
-      <div id="ttsEmbedContainer"></div>
-    </div>
-  </div>
-  <script src="tts.js"></script>
-  <script>
-    // 300+ cool gradients
-    const ngrGradients = [
-      // 20 sample gradients, will repeat for 300+ (for brevity)
-      'linear-gradient(135deg, #23233a 0%, #4f8cff 100%)',
-      'linear-gradient(135deg, #43cea2 0%, #185a9d 100%)',
-      'linear-gradient(135deg, #ff4c4c 0%, #4f8cff 100%)',
-      'linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%)',
-      'linear-gradient(135deg, #ffb347 0%, #ffcc33 100%)',
-      'linear-gradient(135deg, #43cea2 0%, #ff4c4c 100%)',
-      'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
-      'linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%)',
-      'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
-      'linear-gradient(135deg, #f953c6 0%, #b91d73 100%)',
-      'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)',
-      'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-      'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-      'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-      'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-      'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)',
-      'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
-      'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
-    ];
-    // Repeat to get 300+ backgrounds
-    while (ngrGradients.length < 300) {
-      ngrGradients.push(...ngrGradients);
-    }
-    ngrGradients.length = 300;
+            <text x="50%" y="50%" text-anchor="middle" dy=".3em">NGR RIJAN</text>
+        </svg>
+        <div class="resource-card">
+            <div class="resource-item">
+                <h3>Ninja Ripper</h3>
+                <p>Extract 3D models and textures from games with ease.</p>
+                <a href="https://www.mediafire.com/file/8lbld9z63j07ap2/NinjaRipper.exe/file" target="_blank" aria-label="Download Ninja Ripper">Open Link</a>
+            </div>
+            <div class="resource-item">
+                <h3>Noesis & Ninja Ripper 2-in-1</h3>
+                <p>All-in-one toolkit for model conversion and extraction.</p>
+                <a href="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" target="_blank" aria-label="Download Noesis & Ninja Ripper">Open Link</a>
+            </div>
+            <div class="resource-item">
+                <h3>Bandicam</h3>
+                <p>Record your screen in high quality for tutorials and gameplay.</p>
+                <a href="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" target="_blank" aria-label="Download Bandicam">Open Link</a>
+            </div>
+            <div class="resource-item">
+                <h3>Topaz Video AI Latest Version</h3>
+                <p>Latest version of Topaz Video AI Pro.</p>
+                <a href="https://www.mediafire.com/file/2vbhi4ce146gxzo/Topaz+Video+AI+Pro+7.0.3+(x64)+[FileCR].rar/file" target="_blank" aria-label="Download Topaz Video AI">Open Link</a>
+            </div>
+            <div class="resource-item">
+                <h3>Protected Private for Only NGR</h3>
+                <p>Password-protected resource (password: NGR).</p>
+                <a href="https://www.mediafire.com/file/zonnw7j1lp67s2z/a+an+top+edit.rar/file" target="_blank" aria-label="Download Protected Private Resource">Open Link</a>
+            </div>
+            <div class="resource-item">
+                <h3>Medice</h3>
+                <p>Medicine-related resource.</p>
+                <a href="https://www.mediafire.com/file/jwmil38minzygqn/Medicine.rar/file" target="_blank" aria-label="Download Medice Resource">Open Link</a>
+            </div>
+        </div>
+    </section>
 
-    const ngrBgFade = document.getElementById('ngrBgFade');
-    let ngrBgIndex = 0;
-    let ngrBgTimer = null;
-    function setNgrBg(index) {
-      ngrBgFade.style.background = ngrGradients[index % ngrGradients.length];
-      ngrBgFade.classList.remove('active');
-      setTimeout(() => ngrBgFade.classList.add('active'), 50);
-    }
-    function startNgrBgCycle() {
-      setNgrBg(ngrBgIndex);
-      ngrBgTimer = setInterval(() => {
-        ngrBgIndex = (ngrBgIndex + 1) % ngrGradients.length;
-        setNgrBg(ngrBgIndex);
-      }, 20000);
-    }
-    function stopNgrBgCycle() {
-      clearInterval(ngrBgTimer);
-      ngrBgFade.classList.remove('active');
-    }
+    <!-- NGR RIJAN Tab -->
+    <section id="ngr-rijan" class="tab-content" role="region" aria-label="NGR RIJAN TTS Section">
+        <h2>NGR RIJAN</h2>
+        <p>स्वागत है उपयोगकर्ता, यह ऐप एनजीआर द्वारा हिंदी में बनाया गया है</p>
+        <div class="tts-container">
+            <textarea id="tts-text" placeholder="Enter text to speak in Hindi" aria-label="Text to speak"></textarea>
+            <select id="voice-select" aria-label="Select voice"></select>
+            <div>
+                <label for="volume">Volume:</label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1" aria-label="Volume control">
+            </div>
+            <div>
+                <label for="speed">Speed:</label>
+                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1" aria-label="Speed control">
+            </div>
+            <button onclick="speak()" aria-label="Speak text">Speak</button>
+            <button onclick="stopSpeech()" aria-label="Stop speech">Stop</button>
+            <div class="loader" id="tts-loader"></div>
+            <p id="tts-status" aria-live="polite">Status: Ready</p>
+            <p id="tts-message" aria-live="polite"></p>
+            <div class="tts-history" id="tts-history" aria-label="TTS history">
+                <h3>Recent TTS Inputs</h3>
+            </div>
+        </div>
+    </section>
 
-    // Nepali date conversion (simple, for demo)
-    function getNepaliDate() {
-      // This is a simple approximation, not a true Nepali calendar
-      const now = new Date();
-      const bsYear = now.getFullYear() + 57;
-      const bsMonth = now.getMonth() + 9 > 12 ? (now.getMonth() - 3) : (now.getMonth() + 9);
-      const bsDay = now.getDate();
-      return `${bsYear}/${bsMonth.toString().padStart(2, '0')}/${bsDay.toString().padStart(2, '0')}`;
-    }
+    <!-- Follow Us Tab -->
+    <section id="follow-us" class="tab-content" role="region" aria-label="Follow Us Section">
+        <div class="youtube-row" onclick="window.open('https://youtube.com/@ngr-rijan?si=Dkx6kBXwVBRMPovk', '_blank')" role="button" tabindex="0" aria-label="Follow us on YouTube">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="youtubeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff0000;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ffd700;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M90 30s-2-10-10-12c-10-2-50-2-50-2s-40 0-50 2c-8 2-10 12-10 12s0 20 0 30 2 20 10 22c10 2 50 2 50 2s40 0 50-2c8-2 10-12 10-12s0-20 0-30z" fill="#ff0000"/>
+                <path d="M40 70l30-20-30-20v40z" fill="#fff"/>
+                <text x="10" y="90" font-size="20">YouTube</text>
+            </svg>
+            <h3>Follow Us on YouTube</h3>
+        </div>
+        <p>We're on the road to 500 subscribers! Help us reach our goal. Something new and exciting is coming soon—stay tuned and make sure to subscribe so you don't miss out!</p>
+    </section>
 
-    // Time/date update
-    function updateTimeDate() {
-      const now = new Date();
-      document.getElementById('currentTime').textContent = now.toLocaleTimeString();
-      document.getElementById('currentDate').textContent = now.toLocaleDateString();
-      document.getElementById('nepaliDate').textContent = getNepaliDate();
-    }
-    setInterval(updateTimeDate, 1000);
-    updateTimeDate();
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <p>&copy; 2025 NGR RIJAN | <a href="#" aria-label="Privacy Policy">Privacy Policy</a> | <a href="#" aria-label="Contact Us">Contact Us</a></p>
+    </footer>
 
-    // TTS for admin info
-    document.getElementById('ttsBtn').onclick = function() {
-      const time = document.getElementById('currentTime').textContent;
-      const date = document.getElementById('currentDate').textContent;
-      const npdate = document.getElementById('nepaliDate').textContent;
-      let msg = `Current time is ${time}. Date is ${date}. Nepali date is ${npdate}. Welcome to N G R admin panel.`;
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utter = new window.SpeechSynthesisUtterance(msg);
-        utter.rate = 1.05;
-        utter.pitch = 1.1;
-        utter.lang = 'en-US';
-        window.speechSynthesis.speak(utter);
-      }
-    };
-
-    // Existing login and tab logic
-    const loginForm = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
-    const loginBox = document.getElementById('loginBox');
-    const underWorking = document.getElementById('underWorking');
-    const navbar = document.getElementById('navbar');
-    const homeTab = document.getElementById('homeTab');
-    const ngrrijanTab = document.getElementById('ngrrijanTab');
-    const ngrAdmin = document.getElementById('ngrAdmin');
-    const ngrAdminForm = document.getElementById('ngrAdminForm');
-    const ngrAdminError = document.getElementById('ngrAdminError');
-    const ngrPanel = document.getElementById('ngrPanel');
-    const homeContent = document.getElementById('homeContent');
-    const followTab = document.getElementById('followTab');
-    const followContent = document.getElementById('followContent');
-
-    function speak(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utter = new window.SpeechSynthesisUtterance(text);
-        utter.rate = 1.05;
-        utter.pitch = 1.1;
-        utter.lang = 'en-US';
-        window.speechSynthesis.speak(utter);
-      }
-    }
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const id = document.getElementById('userid').value.trim();
-      const pass = document.getElementById('password').value.trim();
-      if ((id === '1' || id === '2') && pass === '2') {
-        loginBox.style.display = 'none';
-        navbar.style.display = 'none';
-        homeContent.style.display = 'none';
-        document.getElementById('ngrrijanSection').style.display = 'block';
-        setTimeout(function() {
-          var ttsModal = document.getElementById('ttsModal');
-          if (ttsModal) {
-            ttsModal.style.display = 'block';
-            ttsModal.style.position = 'static';
-            ttsModal.style.background = 'none';
-            ttsModal.style.width = '100%';
-            ttsModal.style.height = 'auto';
-            ttsModal.style.zIndex = '1';
-            ttsModal.style.alignItems = 'stretch';
-            ttsModal.style.justifyContent = 'flex-start';
-            document.getElementById('ttsEmbedContainer').appendChild(ttsModal);
-          }
-        }, 100);
-        ngrAdmin.style.display = 'none';
-        ngrPanel.style.display = 'none';
-        stopNgrBgCycle();
-        speak('Welcome to N G R Rijan Web');
-      } else {
-        errorMsg.textContent = 'Invalid ID or Password';
-        setTimeout(() => errorMsg.textContent = '', 1500);
-      }
-    });
-    homeTab.addEventListener('click', function() {
-      homeContent.style.display = 'block';
-      ngrAdmin.style.display = 'none';
-      ngrPanel.style.display = 'none';
-      followContent.style.display = 'none';
-      stopNgrBgCycle();
-      document.getElementById('ngrAdminBg').style.display = 'none';
-    });
-    ngrrijanTab.addEventListener('click', function() {
-      homeContent.style.display = 'none';
-      ngrAdmin.style.display = 'none';
-      ngrPanel.style.display = 'none';
-      ngrBgFade.style.display = 'none';
-      followContent.style.display = 'none';
-      document.getElementById('ngrrijanSection').style.display = 'block';
-      setTimeout(function() {
-        var ttsModal = document.getElementById('ttsModal');
-        if (ttsModal && !document.getElementById('ttsEmbedContainer').contains(ttsModal)) {
-          ttsModal.style.display = 'block';
-          ttsModal.style.position = 'static';
-          ttsModal.style.background = 'none';
-          ttsModal.style.width = '100%';
-          ttsModal.style.height = 'auto';
-          ttsModal.style.zIndex = '1';
-          ttsModal.style.alignItems = 'stretch';
-          ttsModal.style.justifyContent = 'flex-start';
-          document.getElementById('ttsEmbedContainer').appendChild(ttsModal);
+    <script>
+        // Tab Navigation
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('nav ul li a').forEach(link => link.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`nav ul li a[href="#${tabId}"]`).classList.add('active');
         }
-      }, 100);
-    });
-    followTab.addEventListener('click', function() {
-      homeContent.style.display = 'none';
-      ngrAdmin.style.display = 'none';
-      ngrPanel.style.display = 'none';
-      followContent.style.display = 'block';
-      stopNgrBgCycle();
-      document.getElementById('ngrAdminBg').style.display = 'none';
-    });
-    ngrAdminForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const id = document.getElementById('ngrAdminId').value.trim();
-      const pass = document.getElementById('ngrAdminPass').value.trim();
-      if (id === 'NGR' && pass === 'NGR') {
-        ngrAdmin.style.display = 'none';
-        ngrPanel.style.display = 'block';
-        ngrAdminError.textContent = '';
-        ngrBgFade.style.display = 'block';
-        startNgrBgCycle();
-        setNgrBg(ngrBgIndex);
-        speak('Welcome Admin. You can now control your web page.');
-        document.getElementById('ngrAdminBg').style.display = 'block';
-        if (window.showTTSModal) window.showTTSModal();
-      } else {
-        ngrAdminError.textContent = 'Invalid Admin ID or Password';
-        setTimeout(() => ngrAdminError.textContent = '', 1500);
-      }
-    });
 
-    // Date display
-    function updateDate() {
-      const d = new Date();
-      document.getElementById('dateDisplay').textContent = d.toLocaleString();
-    }
-    setInterval(updateDate, 1000);
-    updateDate();
+        // Login System
+        function login() {
+            const userId = document.getElementById('user-id').value;
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('login-error');
+            if ((userId === '1' || userId === '2') && password === '2') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('nav').style.display = 'block';
+                document.getElementById('home').classList.add('active');
+                error.style.display = 'none';
+            } else {
+                error.style.display = 'block';
+            }
+        }
 
-    // Animation sequence for watermark text
-    const anims = [
-      'ngr-fadein', 'ngr-shake', 'ngr-scale', 'ngr-rotate', 'ngr-fadeout', 'ngr-skew', 'ngr-blur', 'ngr-glow', 'ngr-slide', 'ngr-bounce', 'ngr-fadein', 'ngr-shake2'
-    ];
-    let animIdx = 0;
-    function nextAnim() {
-      document.querySelectorAll('.ngr-anim-text').forEach(el => {
-        anims.forEach(a => el.classList.remove(a));
-        el.classList.add(anims[animIdx]);
-      });
-      animIdx = (animIdx + 1) % anims.length;
-    }
-    setInterval(nextAnim, 10000);
-    nextAnim();
-  </script>
+        // TTS System
+        const synth = window.speechSynthesis;
+        let voices = [];
+        const ttsHistory = JSON.parse(localStorage.getItem('ttsHistory')) || [];
+
+        function populateVoices() {
+            voices = synth.getVoices();
+            const voiceSelect = document.getElementById('voice-select');
+            voiceSelect.innerHTML = '';
+            voices.forEach(voice => {
+                if (voice.lang.includes('hi-IN') || voice.name.toLowerCase().includes('hindi')) {
+                    const option = document.createElement('option');
+                    option.value = voice.name;
+                    option.text = `${voice.name}${voice.name.includes('Google') || voice.name.includes('Natural') ? ' (Realistic)' : ''}`;
+                    voiceSelect.appendChild(option);
+                }
+            });
+
+            // Add custom voices
+            const customVoices = [
+                { name: 'NGR Hindi Ultra (Custom Model)', value: 'ngr-ultra' },
+                { name: 'NGR Ultra Realistic (AI, ElevenLabs-like, Simulated)', value: 'ngr-ultra-realistic' }
+            ];
+            customVoices.forEach(custom => {
+                const option = document.createElement('option');
+                option.value = custom.value;
+                option.text = custom.name;
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        function speak() {
+            const text = document.getElementById('tts-text').value;
+            const voiceSelect = document.getElementById('voice-select').value;
+            const volume = document.getElementById('volume').value;
+            const speed = document.getElementById('speed').value;
+            const status = document.getElementById('tts-status');
+            const message = document.getElementById('tts-message');
+            const loader = document.getElementById('tts-loader');
+
+            if (!text) {
+                status.textContent = 'Status: Please enter text';
+                return;
+            }
+
+            loader.style.display = 'block';
+            status.textContent = 'Status: Processing...';
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.volume = volume;
+            utterance.rate = speed;
+
+            if (voiceSelect.startsWith('ngr-')) {
+                message.textContent = 'This is a simulated ultra-realistic voice. For true AI voices, connect to a service like ElevenLabs.';
+                const hindiVoice = voices.find(v => v.lang.includes('hi-IN')) || voices[0];
+                utterance.voice = hindiVoice;
+                utterance.pitch = voiceSelect === 'ngr-ultra' ? 1.2 : 1.5;
+                utterance.rate = voiceSelect === 'ngr-ultra' ? 0.9 : 0.8;
+            } else {
+                message.textContent = '';
+                utterance.voice = voices.find(v => v.name === voiceSelect);
+            }
+
+            synth.speak(utterance);
+            status.textContent = 'Status: Playing...';
+            loader.style.display = 'none';
+
+            // Save to history
+            if (!ttsHistory.includes(text)) {
+                ttsHistory.unshift(text);
+                if (ttsHistory.length > 5) ttsHistory.pop();
+                localStorage.setItem('ttsHistory', JSON.stringify(ttsHistory));
+                updateHistory();
+            }
+
+            utterance.onend = () => {
+                status.textContent = 'Status: Ready';
+                loader.style.display = 'none';
+            };
+        }
+
+        function stopSpeech() {
+            synth.cancel();
+            document.getElementById('tts-status').textContent = 'Status: Stopped';
+            document.getElementById('tts-loader').style.display = 'none';
+        }
+
+        function updateHistory() {
+            const historyDiv = document.getElementById('tts-history');
+            historyDiv.innerHTML = '<h3>Recent TTS Inputs</h3>';
+            ttsHistory.forEach(text => {
+                const div = document.createElement('div');
+                div.className = 'tts-history-item';
+                div.textContent = text;
+                div.setAttribute('tabindex', '0');
+                div.setAttribute('role', 'button');
+                div.setAttribute('aria-label', `Replay text: ${text}`);
+                div.onclick = () => {
+                    document.getElementById('tts-text').value = text;
+                    speak();
+                };
+                div.onkeydown = e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        document.getElementById('tts-text').value = text;
+                        speak();
+                    }
+                };
+                historyDiv.appendChild(div);
+            });
+        }
+
+        // Initialize voices and history
+        synth.onvoiceschanged = () => {
+            populateVoices();
+            updateHistory();
+        };
+        populateVoices();
+        updateHistory();
+
+        // Keyboard navigation for YouTube row
+        document.querySelector('.youtube-row').onkeydown = e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                window.open('https://youtube.com/@ngr-rijan?si=Dkx6kBXwVBRMPovk', '_blank');
+            }
+        };
+
+        // Show home tab by default
+        showTab('home');
+    </script>
 </body>
-</html> 
+</html>

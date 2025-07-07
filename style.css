@@ -353,77 +353,43 @@ body {
 
 /* Home Links Rectangle Container */
 .home-links-rect {
-  position: relative;
-  background: rgba(34, 40, 60, 0.97);
-  border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.18);
-  padding: 28px 32px 28px 32px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 2;
-  width: 420px;
-  max-width: 90vw;
-  height: 220px;
-  margin: 36px auto 0 auto;
-}
-.home-links-rect::before {
-  content: '';
-  position: absolute;
-  top: -3px; left: -3px; right: -3px; bottom: -3px;
-  border-radius: 22px;
-  z-index: -1;
-  background: linear-gradient(270deg, #ff6ec4, #7873f5, #42e695, #ff6ec4);
-  background-size: 600% 600%;
-  animation: borderGradientAnim 6s ease-in-out infinite;
-}
-@keyframes borderGradientAnim {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.home-links-rect::-webkit-scrollbar {
-  width: 0 !important;
-  background: transparent;
-}
-.home-links-rect {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-@media (max-width: 600px) {
-  .home-links-rect {
-    padding: 24px 6vw;
-    margin: 70px auto 0 auto;
-    max-width: 98vw;
-    min-height: 180px;
-    width: 98vw;
-  }
-  #homeLinks span {
-    font-size: 1.5em;
-    font-weight: 800;
-    letter-spacing: 1px;
-    padding: 0 2vw;
-  }
-}
-@media (min-width: 601px) {
-  .home-links-rect {
-    padding: 48px 40px;
-    margin: 90px auto 0 auto;
-    max-width: 700px;
-    min-height: 320px;
-    width: 90vw;
-  }
-  #homeLinks span {
-    font-size: 3.2em;
-    font-weight: 900;
-    letter-spacing: 2px;
-  }
+  background: rgba(40, 44, 63, 0.92);
+  border-radius: 32px;
+  box-shadow: 0 8px 48px #0003;
+  border: 3px solid #4f8cff;
+  padding: 64px 48px;
+  margin: 0 auto;
+  max-width: 1100px;
+  min-height: 500px;
+  width: 90vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 #homeLinks {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 48px;
+}
+@media (max-width: 900px) {
+  .home-links-rect {
+    padding: 32px 8vw;
+    max-width: 98vw;
+    min-height: 320px;
+    height: auto;
+  }
+  #homeLinks div span {
+    font-size: 1.2em !important;
+  }
+  #homeLinks a {
+    font-size: 1em !important;
+  }
 }
 #homeLinks span {
   font-size: 3.2em;

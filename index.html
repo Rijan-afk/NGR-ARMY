@@ -159,18 +159,45 @@
     </form>
   </div>
   <div class="navbar" id="navbar" style="display:none;">
-    <button class="nav-home">Home</button>
+    <button class="nav-home" id="homeTab">Home</button>
+    <button class="nav-ngr" id="ngrTab">NGR</button>
   </div>
   <div class="under-working" id="underWorking" style="display:none;">Under Working</div>
+  <div class="ngr-admin-container" id="ngrAdmin" style="display:none;">
+    <div class="login-title">NGR Admin Login</div>
+    <form class="login-form" id="ngrAdminForm" autocomplete="off">
+      <input type="text" id="ngrAdminId" placeholder="Admin ID" required />
+      <input type="password" id="ngrAdminPass" placeholder="Admin Password" required />
+      <button class="login-btn" type="submit">Login as Admin</button>
+      <div class="error-message" id="ngrAdminError"></div>
+    </form>
+  </div>
+  <div class="ngr-admin-panel" id="ngrPanel" style="display:none;">
+    <div class="login-title">NGR Admin Panel</div>
+    <form id="fileUploadForm" class="login-form" enctype="multipart/form-data">
+      <input type="file" id="fileInput" />
+      <button class="login-btn" type="submit">Upload to Home</button>
+      <div class="error-message" id="uploadMsg"></div>
+    </form>
+  </div>
   <script>
     const loginForm = document.getElementById('loginForm');
     const errorMsg = document.getElementById('errorMsg');
     const loginBox = document.getElementById('loginBox');
     const underWorking = document.getElementById('underWorking');
     const navbar = document.getElementById('navbar');
+    const homeTab = document.getElementById('homeTab');
+    const ngrTab = document.getElementById('ngrTab');
+    const ngrAdmin = document.getElementById('ngrAdmin');
+    const ngrAdminForm = document.getElementById('ngrAdminForm');
+    const ngrAdminError = document.getElementById('ngrAdminError');
+    const ngrPanel = document.getElementById('ngrPanel');
+    const fileUploadForm = document.getElementById('fileUploadForm');
+    const uploadMsg = document.getElementById('uploadMsg');
+
     function speak(text) {
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // Stop any previous
+        window.speechSynthesis.cancel();
         const utter = new window.SpeechSynthesisUtterance(text);
         utter.rate = 1.05;
         utter.pitch = 1.1;
@@ -186,11 +213,48 @@
         loginBox.style.display = 'none';
         navbar.style.display = 'flex';
         underWorking.style.display = 'block';
+        ngrAdmin.style.display = 'none';
+        ngrPanel.style.display = 'none';
         speak('Welcome to N G R Rijan Web');
       } else {
         errorMsg.textContent = 'Invalid ID or Password';
         setTimeout(() => errorMsg.textContent = '', 1500);
       }
+    });
+    homeTab.addEventListener('click', function() {
+      underWorking.style.display = 'block';
+      ngrAdmin.style.display = 'none';
+      ngrPanel.style.display = 'none';
+    });
+    ngrTab.addEventListener('click', function() {
+      underWorking.style.display = 'none';
+      ngrAdmin.style.display = 'block';
+      ngrPanel.style.display = 'none';
+    });
+    ngrAdminForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = document.getElementById('ngrAdminId').value.trim();
+      const pass = document.getElementById('ngrAdminPass').value.trim();
+      if (id === 'NGR' && pass === 'NGR') {
+        ngrAdmin.style.display = 'none';
+        ngrPanel.style.display = 'block';
+        ngrAdminError.textContent = '';
+        speak('Welcome Admin. You can now control your web page.');
+      } else {
+        ngrAdminError.textContent = 'Invalid Admin ID or Password';
+        setTimeout(() => ngrAdminError.textContent = '', 1500);
+      }
+    });
+    fileUploadForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const fileInput = document.getElementById('fileInput');
+      if (fileInput.files.length === 0) {
+        uploadMsg.textContent = 'Please select a file to upload.';
+        return;
+      }
+      // Simulate upload (no backend)
+      uploadMsg.textContent = 'File uploaded to Home tab (simulated).';
+      setTimeout(() => uploadMsg.textContent = '', 2000);
     });
   </script>
 </body>

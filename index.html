@@ -204,6 +204,22 @@
   </div>
   <!-- Home Content Wrapper -->
   <div id="homeContent" style="display:none;">
+    <div class="ngr-watermark-bg">
+      <svg viewBox="0 0 1200 900" width="100%" height="100%" style="position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;">
+        <defs>
+          <linearGradient id="ngrGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4f8cff">
+              <animate attributeName="stop-color" values="#4f8cff;#43cea2;#ff6ec4;#4f8cff" dur="6s" repeatCount="indefinite" />
+            </stop>
+            <stop offset="100%" stop-color="#ff6ec4">
+              <animate attributeName="stop-color" values="#ff6ec4;#43cea2;#4f8cff;#ff6ec4" dur="6s" repeatCount="indefinite" />
+            </stop>
+          </linearGradient>
+        </defs>
+        <text x="50%" y="38%" text-anchor="middle" font-size="140" font-family="Montserrat, Arial, sans-serif" fill="none" stroke="url(#ngrGradient)" stroke-width="6" opacity="0.13">NGR</text>
+        <text x="50%" y="68%" text-anchor="middle" font-size="140" font-family="Montserrat, Arial, sans-serif" fill="none" stroke="url(#ngrGradient)" stroke-width="6" opacity="0.13">RIJAN</text>
+      </svg>
+    </div>
     <div id="homeLinksContainer" class="home-links-rect">
       <div id="homeLinks" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;gap:40px;padding:24px 0;">
         <div style="text-align:center;">

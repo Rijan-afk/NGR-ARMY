@@ -228,6 +228,19 @@
       color: #23233a;
       transform: scale(0.97);
     }
+    .ngr-admin-panel-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(120deg, #23233a 0%, #4f8cff 60%, #43cea2 100%);
+      opacity: 0.18;
+      animation: ngrAdminBgAnim 12s linear infinite alternate;
+    }
+    @keyframes ngrAdminBgAnim {
+      0% { filter: blur(0px) brightness(1); }
+      100% { filter: blur(2px) brightness(1.1); }
+    }
   </style>
 </head>
 <body>
@@ -327,7 +340,7 @@
   </div>
   <button id="ttsBtn" style="position:fixed;top:20px;right:20px;z-index:1000;">TTS</button>
   <div id="ttsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:2000;align-items:center;justify-content:center;">
-    <div style="background:#fff;padding:24px;border-radius:8px;min-width:320px;max-width:90vw;">
+    <div id="ttsModalBox" style="background:linear-gradient(135deg,#23233a 0%,#4f8cff 100%);padding:32px 24px 24px 24px;border-radius:18px;min-width:320px;max-width:90vw;box-shadow:0 8px 32px #0004;position:relative;">
       <h2>Text-to-Speech</h2>
       <label>Text:<br/>
         <textarea id="ttsText" rows="4" style="width:100%"></textarea>
@@ -339,17 +352,12 @@
         </select>
       </label><br/><br/>
       <label>Voice:
-        <select id="ttsVoice">
-          <option value="en-US-1">English - Male 1</option>
-          <option value="en-US-2">English - Female 1</option>
-          <option value="hi-IN-1">Hindi - Male 1</option>
-          <option value="hi-IN-2">Hindi - Female 1</option>
-          <!-- More voices can be added dynamically -->
-        </select>
+        <select id="ttsVoice"></select>
       </label><br/><br/>
       <button id="ttsGenerate">Generate & Download</button>
       <button id="ttsClose" style="margin-left:8px;">Close</button>
       <div id="ttsStatus" style="margin-top:10px;color:#d00;"></div>
+      <div id="ttsPlaying" style="display:none;margin-top:10px;color:#43cea2;font-weight:bold;">🔊 Playing...</div>
     </div>
   </div>
   <div id="dateDisplay" style="position:fixed;top:20px;left:20px;z-index:1000;font-size:18px;font-weight:bold;"></div>
@@ -373,11 +381,12 @@
         </span>
       </div>
       <div class="follow-desc">
-        <span class="desc-title">We've reached <b>500 subscribers</b>!</span><br/>
-        <span class="desc-body">Thank you for your amazing support. <b>Something new and exciting is coming soon</b>—stay tuned and make sure to subscribe so you don't miss out!</span>
+        <span class="desc-title">We're on the road to <b>500 subscribers</b>!</span><br/>
+        <span class="desc-body">Help us reach our goal. <b>Something new and exciting is coming soon</b>—stay tuned and make sure to subscribe so you don't miss out!</span>
       </div>
     </div>
   </div>
+  <div class="ngr-admin-panel-bg" id="ngrAdminBg" style="display:none;"></div>
   <script>
     // 300+ cool gradients
     const ngrGradients = [
@@ -516,6 +525,7 @@
       ngrPanel.style.display = 'none';
       followContent.style.display = 'none';
       stopNgrBgCycle();
+      document.getElementById('ngrAdminBg').style.display = 'none';
     });
     ngrTab.addEventListener('click', function() {
       homeContent.style.display = 'none';
@@ -524,6 +534,7 @@
       ngrBgFade.style.display = 'none';
       followContent.style.display = 'none';
       stopNgrBgCycle();
+      document.getElementById('ngrAdminBg').style.display = 'block';
     });
     followTab.addEventListener('click', function() {
       homeContent.style.display = 'none';
@@ -531,6 +542,7 @@
       ngrPanel.style.display = 'none';
       followContent.style.display = 'block';
       stopNgrBgCycle();
+      document.getElementById('ngrAdminBg').style.display = 'none';
     });
     ngrAdminForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -544,6 +556,7 @@
         startNgrBgCycle();
         setNgrBg(ngrBgIndex);
         speak('Welcome Admin. You can now control your web page.');
+        document.getElementById('ngrAdminBg').style.display = 'block';
       } else {
         ngrAdminError.textContent = 'Invalid Admin ID or Password';
         setTimeout(() => ngrAdminError.textContent = '', 1500);
@@ -573,7 +586,28 @@
     const ttsGenerate = document.getElementById('ttsGenerate');
     ttsGenerate.onclick = async function() {
       document.getElementById('ttsStatus').textContent = 'Generating...';
-      // Actual TTS logic will be added here
+      // Improved TTS logic
+      const text = document.getElementById('ttsText').value;
+      const voiceName = document.getElementById('ttsVoice').value;
+      const voices = window.speechSynthesis.getVoices();
+      const voice = voices.find(v => v.name === voiceName);
+      if ('speechSynthesis' in window && text) {
+        window.speechSynthesis.cancel();
+        const utter = new window.SpeechSynthesisUtterance(text);
+        if (voice) utter.voice = voice;
+        utter.rate = 1.05;
+        utter.pitch = 1.1;
+        utter.lang = voice ? voice.lang : 'en-US';
+        document.getElementById('ttsPlaying').style.display = 'block';
+        utter.onend = utter.onerror = function() {
+          document.getElementById('ttsPlaying').style.display = 'none';
+          document.getElementById('ttsStatus').textContent = '';
+        };
+        window.speechSynthesis.speak(utter);
+        document.getElementById('ttsStatus').textContent = '';
+      } else {
+        document.getElementById('ttsStatus').textContent = 'TTS not supported or no text.';
+      }
     };
 
     // Date display
@@ -598,6 +632,25 @@
     }
     setInterval(nextAnim, 10000);
     nextAnim();
+
+    // TTS Voices Dynamic Population
+    function populateTtsVoices() {
+      const ttsVoice = document.getElementById('ttsVoice');
+      if (!ttsVoice) return;
+      ttsVoice.innerHTML = '';
+      let voices = window.speechSynthesis.getVoices();
+      voices = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('hi') || v.lang.startsWith('ne'));
+      voices.forEach((voice, i) => {
+        const opt = document.createElement('option');
+        opt.value = voice.name;
+        opt.textContent = `${voice.name} (${voice.lang})${voice.default ? ' [Default]' : ''}${voice.gender ? ' - ' + voice.gender : ''}`;
+        ttsVoice.appendChild(opt);
+      });
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = populateTtsVoices;
+      populateTtsVoices();
+    }
   </script>
 </body>
 </html> 

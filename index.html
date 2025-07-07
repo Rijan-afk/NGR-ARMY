@@ -559,7 +559,7 @@
             <h2>Login to NGR RIJAN</h2>
             <input type="text" id="user-id" placeholder="User ID (1 or 2)" aria-label="User ID" required>
             <input type="password" id="password" placeholder="Password (2)" aria-label="Password" required>
-            <button onclick="login()" aria-label="Login">Login</button>
+            <button type="button" onclick="login()" aria-label="Login">Login</button>
             <p id="login-error" style="color: red; display: none;">Invalid User ID or Password</p>
         </div>
     </section>
@@ -572,20 +572,72 @@
             <li><a href="#home" class="active" onclick="showTab('home')" aria-label="Home Tab">Home</a></li>
             <li><a href="#ngr-rijan" onclick="showTab('ngr-rijan')" aria-label="NGR RIJAN Tab">NGR RIJAN</a></li>
             <li><a href="#follow-us" onclick="showTab('follow-us')" aria-label="Follow Us Tab">Follow Us!</a></li>
-            < preocupado
+        </ul>
+    </nav>
 
-System: * Today's date and time is 03:23 PM +0545 on Monday, July 07, 2025.
+    <!-- ------------------------------------------ -->
+    <!-- Main Content -->
+    <!-- ------------------------------------------ -->
+    <div class="tab-content active" id="home">
+        <!-- Home Tab Content -->
+    </div>
 
-function login() {
-    const userId = document.getElementById('user-id').value;
-    const password = document.getElementById('password').value;
-    const error = document.getElementById('login-error');
-    if (userId === '1' && password === '2') {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('nav').style.display = 'block';
-        document.getElementById('home').classList.add('active');
-        error.style.display = 'none';
-    } else {
-        error.style.display = 'block';
-    }
-}
+    <div class="tab-content" id="ngr-rijan">
+        <!-- NGR RIJAN Tab Content -->
+    </div>
+
+    <div class="tab-content" id="follow-us">
+        <!-- Follow Us Tab Content -->
+    </div>
+
+    <div class="tab-content" id="about">
+        <!-- About Tab Content -->
+    </div>
+
+    <div class="tab-content" id="faq">
+        <!-- FAQ Tab Content -->
+    </div>
+
+    <div class="tab-content" id="tutorials">
+        <!-- Tutorials Tab Content -->
+    </div>
+
+    <!-- ------------------------------------------ -->
+    <!-- Modal -->
+    <!-- ------------------------------------------ -->
+    <div class="modal">
+        <div class="modal-content">
+            <!-- Modal Content -->
+        </div>
+    </div>
+
+    <!-- ------------------------------------------ -->
+    <!-- Footer -->
+    <!-- ------------------------------------------ -->
+    <footer>
+        <!-- Footer Content -->
+    </footer>
+
+    <!-- ------------------------------------------ -->
+    <!-- JavaScript -->
+    <!-- ------------------------------------------ -->
+    <script>
+        function login() {
+            const userId = document.getElementById('user-id').value;
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('login-error');
+            if (userId === '1' && password === '2') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('nav').style.display = 'block';
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById('home').classList.add('active');
+                document.querySelectorAll('nav ul li a').forEach(link => link.classList.remove('active'));
+                document.querySelector('nav ul li a[href="#home"]').classList.add('active');
+                error.style.display = 'none';
+            } else {
+                error.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

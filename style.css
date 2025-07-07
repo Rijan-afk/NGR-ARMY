@@ -55,8 +55,8 @@ body {
   100% { transform: translateY(0) scale(1); opacity: 0.5; }
 }
 
-.login-container {
-  background: rgba(30, 30, 47, 0.95);
+.login-container, .ngr-admin-container, .ngr-admin-panel {
+  background: rgba(30, 30, 47, 0.97);
   border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.25);
   padding: 48px 36px 36px 36px;
@@ -66,6 +66,17 @@ body {
   align-items: center;
   animation: fadeIn 1s;
   z-index: 1;
+  margin-top: 40px;
+}
+.ngr-admin-container, .ngr-admin-panel {
+  border: 2px solid #ff4c4c;
+  box-shadow: 0 0 24px #ff4c4c44, 0 8px 32px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #2d1e3c 0%, #4f8cff 100%);
+  animation: fadeInGlow 1s;
+}
+@keyframes fadeInGlow {
+  from { opacity: 0; box-shadow: 0 0 0 #ff4c4c00; }
+  to { opacity: 1; box-shadow: 0 0 24px #ff4c4c44, 0 8px 32px rgba(0,0,0,0.25); }
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(40px); }
@@ -78,6 +89,10 @@ body {
   margin-bottom: 18px;
   letter-spacing: 2px;
   text-shadow: 0 2px 8px #0002;
+}
+.ngr-admin-container .login-title, .ngr-admin-panel .login-title {
+  color: #ff4c4c;
+  text-shadow: 0 2px 16px #ff4c4c88, 0 2px 8px #0002;
 }
 .login-form {
   width: 100%;
@@ -111,6 +126,15 @@ body {
   cursor: pointer;
   box-shadow: 0 2px 8px #4f8cff44;
   transition: background 0.2s, transform 0.1s;
+}
+.ngr-admin-panel .login-btn, .ngr-admin-container .login-btn {
+  background: linear-gradient(90deg, #ff4c4c, #ffb347);
+  box-shadow: 0 2px 16px #ff4c4c44;
+  color: #fff;
+}
+.ngr-admin-panel .login-btn:active, .ngr-admin-container .login-btn:active {
+  background: linear-gradient(90deg, #ffb347, #ff4c4c);
+  color: #23233a;
 }
 .login-btn:active {
   transform: scale(0.97);
@@ -165,6 +189,33 @@ body {
   background: linear-gradient(90deg, #43cea2, #4f8cff);
   color: #23233a;
 }
+.nav-ngr {
+  color: #fff;
+  background: linear-gradient(90deg, #ff4c4c, #ffb347);
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 16px;
+  padding: 10px 38px;
+  margin: 0 12px;
+  box-shadow: 0 0 16px 4px #ff4c4c55, 0 2px 8px #ffb34744;
+  letter-spacing: 2px;
+  border: none;
+  outline: none;
+  transition: background 0.2s, color 0.2s, box-shadow 0.3s;
+  text-shadow: 0 2px 16px #ff4c4c88, 0 2px 8px #0002;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: ngrGlow 2s infinite alternate;
+}
+@keyframes ngrGlow {
+  0% { box-shadow: 0 0 16px 4px #ff4c4c55, 0 2px 8px #ffb34744; }
+  100% { box-shadow: 0 0 32px 8px #ffb34799, 0 2px 16px #ff4c4c88; }
+}
+.nav-ngr:active {
+  background: linear-gradient(90deg, #ffb347, #ff4c4c);
+  color: #23233a;
+}
 .under-working {
   color: #fff;
   font-size: 2rem;
@@ -176,8 +227,70 @@ body {
   text-shadow: 0 2px 8px #0004;
 }
 @media (max-width: 600px) {
-  .login-container { width: 95vw; padding: 32px 8vw; }
+  .login-container, .ngr-admin-container, .ngr-admin-panel { width: 95vw; padding: 32px 8vw; }
   .navbar { font-size: 1rem; }
-  .nav-home { padding: 8px 16px; font-size: 1rem; }
+  .nav-home, .nav-ngr { padding: 8px 16px; font-size: 1rem; }
   .under-working { font-size: 1.2rem; margin-top: 90px; }
+}
+
+/* TTS Button */
+#ttsBtn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+#ttsBtn:hover {
+  background: #0056b3;
+}
+
+/* TTS Modal */
+#ttsModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+#ttsModal[style*="display: flex"] {
+  display: flex !important;
+}
+#ttsModal > div {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  min-width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+#ttsModal h2 {
+  margin-top: 0;
+}
+#ttsModal textarea {
+  font-size: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+#ttsModal select, #ttsModal button {
+  font-size: 15px;
+  margin-top: 4px;
+}
+#ttsModal button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#ttsModal button:hover {
+  background: #0056b3;
 } 

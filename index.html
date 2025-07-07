@@ -140,6 +140,51 @@
       .nav-home { padding: 8px 16px; font-size: 1rem; }
       .under-working { font-size: 1.2rem; margin-top: 90px; }
     }
+    .ngr-bg-fade {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+    .ngr-bg-fade.active {
+      opacity: 1;
+      transition: opacity 1.5s;
+    }
+    .ngr-admin-panel .info-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 8px;
+    }
+    .ngr-admin-panel .info-label {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #0004;
+    }
+    .ngr-admin-panel .tts-btn {
+      background: linear-gradient(90deg, #43cea2, #4f8cff);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      margin-top: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #4f8cff44;
+      transition: background 0.2s, transform 0.1s;
+      outline: none;
+    }
+    .ngr-admin-panel .tts-btn:active {
+      background: linear-gradient(90deg, #4f8cff, #43cea2);
+      color: #23233a;
+      transform: scale(0.97);
+    }
   </style>
 </head>
 <body>
@@ -172,15 +217,136 @@
       <div class="error-message" id="ngrAdminError"></div>
     </form>
   </div>
+  <div class="ngr-bg-fade" id="ngrBgFade"></div>
   <div class="ngr-admin-panel" id="ngrPanel" style="display:none;">
     <div class="login-title">NGR Admin Panel</div>
+    <div class="info-row">
+      <div class="info-label">Time: <span id="currentTime"></span></div>
+      <div class="info-label">Date: <span id="currentDate"></span></div>
+      <div class="info-label">Nepali Date: <span id="nepaliDate"></span></div>
+      <button class="tts-btn" id="ttsBtn">🔊 Speak Info</button>
+    </div>
     <form id="fileUploadForm" class="login-form" enctype="multipart/form-data">
       <input type="file" id="fileInput" />
       <button class="login-btn" type="submit">Upload to Home</button>
       <div class="error-message" id="uploadMsg"></div>
     </form>
   </div>
+  <button id="ttsBtn" style="position:fixed;top:20px;right:20px;z-index:1000;">TTS</button>
+  <div id="ttsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:24px;border-radius:8px;min-width:320px;max-width:90vw;">
+      <h2>Text-to-Speech</h2>
+      <label>Text:<br/>
+        <textarea id="ttsText" rows="4" style="width:100%"></textarea>
+      </label><br/><br/>
+      <label>Output Type:
+        <select id="ttsOutputType">
+          <option value="mp3">MP3</option>
+          <option value="wav">WAV</option>
+        </select>
+      </label><br/><br/>
+      <label>Voice:
+        <select id="ttsVoice">
+          <option value="en-US-1">English - Male 1</option>
+          <option value="en-US-2">English - Female 1</option>
+          <option value="hi-IN-1">Hindi - Male 1</option>
+          <option value="hi-IN-2">Hindi - Female 1</option>
+          <!-- More voices can be added dynamically -->
+        </select>
+      </label><br/><br/>
+      <button id="ttsGenerate">Generate & Download</button>
+      <button id="ttsClose" style="margin-left:8px;">Close</button>
+      <div id="ttsStatus" style="margin-top:10px;color:#d00;"></div>
+    </div>
+  </div>
   <script>
+    // 300+ cool gradients
+    const ngrGradients = [
+      // 20 sample gradients, will repeat for 300+ (for brevity)
+      'linear-gradient(135deg, #23233a 0%, #4f8cff 100%)',
+      'linear-gradient(135deg, #43cea2 0%, #185a9d 100%)',
+      'linear-gradient(135deg, #ff4c4c 0%, #4f8cff 100%)',
+      'linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%)',
+      'linear-gradient(135deg, #ffb347 0%, #ffcc33 100%)',
+      'linear-gradient(135deg, #43cea2 0%, #ff4c4c 100%)',
+      'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+      'linear-gradient(135deg, #00c3ff 0%, #ffff1c 100%)',
+      'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
+      'linear-gradient(135deg, #f953c6 0%, #b91d73 100%)',
+      'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)',
+      'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+      'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+      'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+      'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+      'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+      'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)',
+      'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
+      'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
+    ];
+    // Repeat to get 300+ backgrounds
+    while (ngrGradients.length < 300) {
+      ngrGradients.push(...ngrGradients);
+    }
+    ngrGradients.length = 300;
+
+    const ngrBgFade = document.getElementById('ngrBgFade');
+    let ngrBgIndex = 0;
+    let ngrBgTimer = null;
+    function setNgrBg(index) {
+      ngrBgFade.style.background = ngrGradients[index % ngrGradients.length];
+      ngrBgFade.classList.remove('active');
+      setTimeout(() => ngrBgFade.classList.add('active'), 50);
+    }
+    function startNgrBgCycle() {
+      setNgrBg(ngrBgIndex);
+      ngrBgTimer = setInterval(() => {
+        ngrBgIndex = (ngrBgIndex + 1) % ngrGradients.length;
+        setNgrBg(ngrBgIndex);
+      }, 20000);
+    }
+    function stopNgrBgCycle() {
+      clearInterval(ngrBgTimer);
+      ngrBgFade.classList.remove('active');
+    }
+
+    // Nepali date conversion (simple, for demo)
+    function getNepaliDate() {
+      // This is a simple approximation, not a true Nepali calendar
+      const now = new Date();
+      const bsYear = now.getFullYear() + 57;
+      const bsMonth = now.getMonth() + 9 > 12 ? (now.getMonth() - 3) : (now.getMonth() + 9);
+      const bsDay = now.getDate();
+      return `${bsYear}/${bsMonth.toString().padStart(2, '0')}/${bsDay.toString().padStart(2, '0')}`;
+    }
+
+    // Time/date update
+    function updateTimeDate() {
+      const now = new Date();
+      document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+      document.getElementById('currentDate').textContent = now.toLocaleDateString();
+      document.getElementById('nepaliDate').textContent = getNepaliDate();
+    }
+    setInterval(updateTimeDate, 1000);
+    updateTimeDate();
+
+    // TTS for admin info
+    document.getElementById('ttsBtn').onclick = function() {
+      const time = document.getElementById('currentTime').textContent;
+      const date = document.getElementById('currentDate').textContent;
+      const npdate = document.getElementById('nepaliDate').textContent;
+      let msg = `Current time is ${time}. Date is ${date}. Nepali date is ${npdate}. Welcome to N G R admin panel.`;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new window.SpeechSynthesisUtterance(msg);
+        utter.rate = 1.05;
+        utter.pitch = 1.1;
+        utter.lang = 'en-US';
+        window.speechSynthesis.speak(utter);
+      }
+    };
+
+    // Existing login and tab logic
     const loginForm = document.getElementById('loginForm');
     const errorMsg = document.getElementById('errorMsg');
     const loginBox = document.getElementById('loginBox');
@@ -215,6 +381,7 @@
         underWorking.style.display = 'block';
         ngrAdmin.style.display = 'none';
         ngrPanel.style.display = 'none';
+        stopNgrBgCycle();
         speak('Welcome to N G R Rijan Web');
       } else {
         errorMsg.textContent = 'Invalid ID or Password';
@@ -225,11 +392,14 @@
       underWorking.style.display = 'block';
       ngrAdmin.style.display = 'none';
       ngrPanel.style.display = 'none';
+      stopNgrBgCycle();
     });
     ngrTab.addEventListener('click', function() {
       underWorking.style.display = 'none';
       ngrAdmin.style.display = 'block';
       ngrPanel.style.display = 'none';
+      ngrBgFade.style.display = 'none';
+      stopNgrBgCycle();
     });
     ngrAdminForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -239,6 +409,9 @@
         ngrAdmin.style.display = 'none';
         ngrPanel.style.display = 'block';
         ngrAdminError.textContent = '';
+        ngrBgFade.style.display = 'block';
+        startNgrBgCycle();
+        setNgrBg(ngrBgIndex);
         speak('Welcome Admin. You can now control your web page.');
       } else {
         ngrAdminError.textContent = 'Invalid Admin ID or Password';
@@ -256,6 +429,21 @@
       uploadMsg.textContent = 'File uploaded to Home tab (simulated).';
       setTimeout(() => uploadMsg.textContent = '', 2000);
     });
+
+    // Modal open/close
+    const ttsBtn = document.getElementById('ttsBtn');
+    const ttsModal = document.getElementById('ttsModal');
+    const ttsClose = document.getElementById('ttsClose');
+    ttsBtn.onclick = () => ttsModal.style.display = 'flex';
+    ttsClose.onclick = () => ttsModal.style.display = 'none';
+    window.onclick = (e) => { if(e.target === ttsModal) ttsModal.style.display = 'none'; };
+
+    // Placeholder for TTS generation
+    const ttsGenerate = document.getElementById('ttsGenerate');
+    ttsGenerate.onclick = async function() {
+      document.getElementById('ttsStatus').textContent = 'Generating...';
+      // Actual TTS logic will be added here
+    };
   </script>
 </body>
 </html> 

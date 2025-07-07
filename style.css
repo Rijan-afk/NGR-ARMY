@@ -426,4 +426,36 @@ body {
   justify-content: space-between;
 }
 .ascii-border .ascii-left { left: 0; }
-.ascii-border .ascii-right { right: 0; } 
+.ascii-border .ascii-right { right: 0; }
+
+.ngr-gradient-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(270deg, #4f8cff, #43cea2, #ff6ec4, #4f8cff);
+  background-size: 200% 200%;
+  animation: ngrGradientMove 12s linear infinite;
+  opacity: 0.7;
+}
+@keyframes ngrGradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.ngr-watermark-svg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: lighten;
+  opacity: 0.7;
+}
+#homeContent, .home-links-rect, #homeLinksContainer {
+  position: relative;
+  z-index: 2;
+} 

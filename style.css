@@ -372,8 +372,27 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 40px;
+  overflow-y: auto;
+  padding: 24px 0;
+}
+#homeLinks::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+#homeLinks:hover::-webkit-scrollbar {
+  background: #222;
+}
+#homeLinks::-webkit-scrollbar-thumb {
+  background: #4f8cff88;
+  border-radius: 8px;
+}
+#homeLinks {
+  scrollbar-width: thin;
+  scrollbar-color: #4f8cff88 transparent;
 }
 #homeLinks span {
   font-size: 1.5em;

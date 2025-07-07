@@ -349,4 +349,35 @@ body {
   font-size: 18px;
   font-weight: bold;
   z-index: 1000;
+}
+
+/* Home Links Rectangle Container */
+.home-links-rect {
+  width: 420px;
+  max-width: 90vw;
+  height: 220px;
+  margin: 36px auto 0 auto;
+  background: rgba(34, 40, 60, 0.97);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+  padding: 28px 32px 28px 32px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 2;
+}
+.home-links-rect::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent;
+}
+.home-links-rect {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+@media (max-width: 600px) {
+  .home-links-rect {
+    width: 98vw;
+    padding: 18px 6vw;
+    height: 180px;
+  }
 } 

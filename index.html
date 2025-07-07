@@ -332,13 +332,7 @@
       <div class="info-label">Nepali Date: <span id="nepaliDate"></span></div>
       <button class="tts-btn" id="ttsBtn">🔊 Speak Info</button>
     </div>
-    <form id="fileUploadForm" class="login-form" enctype="multipart/form-data">
-      <input type="file" id="fileInput" />
-      <button class="login-btn" type="submit">Upload to Home</button>
-      <div class="error-message" id="uploadMsg"></div>
-    </form>
   </div>
-  <button id="ttsBtn" style="position:fixed;top:20px;right:20px;z-index:1000;">TTS</button>
   <div id="ttsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:2000;align-items:center;justify-content:center;">
     <div id="ttsModalBox" style="background:linear-gradient(135deg,#23233a 0%,#4f8cff 100%);padding:32px 24px 24px 24px;border-radius:18px;min-width:320px;max-width:90vw;box-shadow:0 8px 32px #0004;position:relative;">
       <h2>Text-to-Speech</h2>
@@ -486,8 +480,6 @@
     const ngrAdminForm = document.getElementById('ngrAdminForm');
     const ngrAdminError = document.getElementById('ngrAdminError');
     const ngrPanel = document.getElementById('ngrPanel');
-    const fileUploadForm = document.getElementById('fileUploadForm');
-    const uploadMsg = document.getElementById('uploadMsg');
     const homeContent = document.getElementById('homeContent');
     const followTab = document.getElementById('followTab');
     const followContent = document.getElementById('followContent');
@@ -557,21 +549,11 @@
         setNgrBg(ngrBgIndex);
         speak('Welcome Admin. You can now control your web page.');
         document.getElementById('ngrAdminBg').style.display = 'block';
+        document.getElementById('ttsModal').style.display = 'flex';
       } else {
         ngrAdminError.textContent = 'Invalid Admin ID or Password';
         setTimeout(() => ngrAdminError.textContent = '', 1500);
       }
-    });
-    fileUploadForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const fileInput = document.getElementById('fileInput');
-      if (fileInput.files.length === 0) {
-        uploadMsg.textContent = 'Please select a file to upload.';
-        return;
-      }
-      // Simulate upload (no backend)
-      uploadMsg.textContent = 'File uploaded to Home tab (simulated).';
-      setTimeout(() => uploadMsg.textContent = '', 2000);
     });
 
     // Modal open/close
@@ -639,7 +621,6 @@
       if (!ttsVoice) return;
       ttsVoice.innerHTML = '';
       let voices = window.speechSynthesis.getVoices();
-      voices = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('hi') || v.lang.startsWith('ne'));
       voices.forEach((voice, i) => {
         const opt = document.createElement('option');
         opt.value = voice.name;

@@ -129,59 +129,101 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: var(--bg-dark);
-            animation: fadeIn 0.5s ease-in;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #23233a 60%, #4f8cff 100%);
+            animation: fadeIn 0.7s;
         }
 
         .login-form {
-            background: var(--bg-light);
-            color: var(--text-light);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+            padding: 2.5rem 2rem 2rem 2rem;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s;
+        }
+
+        .login-title {
+            background: linear-gradient(45deg, #4f8cff, #43cea2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
         }
 
         .login-form input {
             width: 100%;
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 0.75rem 1rem;
+            margin: 1rem 0 0.5rem 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.05);
+        }
+        .login-form input:focus {
+            background: rgba(79,140,255,0.15);
+            box-shadow: 0 0 0 2px #4f8cff;
         }
 
         .login-form button {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.75rem 0;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #4f8cff, #43cea2);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(45deg, var(--primary-blue), var(--primary-green));
-            color: var(--text-dark);
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(67,206,162,0.15);
+        }
+        .login-form button:focus, .login-form button:hover {
+            transform: scale(1.04);
+            box-shadow: 0 4px 16px rgba(67,206,162,0.25);
         }
 
-        .login-form button:hover, .login-form button:focus {
-            transform: scale(1.05);
-        }
-
-        .login-form button::after {
-            content: '';
+        .login-form button .ripple {
             position: absolute;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             transform: scale(0);
+            background: rgba(255,255,255,0.4);
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            top: 50%;
             pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .login-form button .ripple.show {
+            animation: ripple 0.6s linear;
+            opacity: 1;
         }
 
-        .login-form button:active::after {
-            animation: ripple 0.6s linear;
+        @keyframes ripple {
+            to {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
         }
 
         /* ------------------------------------------ */
@@ -556,11 +598,24 @@
     <!-- ------------------------------------------ -->
     <section id="login-section" aria-label="Login to NGR RIJAN">
         <div class="login-form">
-            <h2>Login to NGR RIJAN</h2>
-            <input type="text" id="user-id" placeholder="User ID (1 or 2)" aria-label="User ID" required>
-            <input type="password" id="password" placeholder="Password (2)" aria-label="Password" required>
-            <button type="button" onclick="login()" aria-label="Login">Login</button>
-            <p id="login-error" style="color: red; display: none;">Invalid User ID or Password</p>
+            <svg width="80" height="80" viewBox="0 0 80 80" style="margin-bottom: 1rem;">
+                <defs>
+                    <linearGradient id="loginGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#4f8cff"/>
+                        <stop offset="100%" stop-color="#43cea2"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="40" cy="40" r="36" fill="url(#loginGrad)" opacity="0.2"/>
+                <text x="50%" y="55%" text-anchor="middle" fill="url(#loginGrad)" font-size="32" font-weight="bold" dy=".3em">🔒</text>
+            </svg>
+            <h2 class="login-title">Login to NGR RIJAN</h2>
+            <input type="text" id="user-id" placeholder="User ID" aria-label="User ID" required autocomplete="username">
+            <input type="password" id="password" placeholder="Password" aria-label="Password" required autocomplete="current-password">
+            <button type="button" onclick="login()" aria-label="Login">
+                <span>Login</span>
+                <span class="ripple"></span>
+            </button>
+            <p id="login-error" style="color: #ff6ec4; display: none; margin-top: 1rem;">Invalid User ID or Password</p>
         </div>
     </section>
 

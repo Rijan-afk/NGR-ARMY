@@ -250,28 +250,45 @@
         }
 
         .resource-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            max-height: 80vh;
-            overflow-y: auto;
-            margin: 0 auto;
+            background: linear-gradient(120deg, rgba(67,206,162,0.10) 0%, rgba(79,140,255,0.10) 100%);
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
             max-width: 800px;
+            margin: 2rem auto;
+            backdrop-filter: blur(2px);
+            transition: box-shadow 0.3s;
         }
 
         .resource-item {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem 1rem;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 2px 12px 0 rgba(67,206,162,0.07);
+            transition: background 0.3s, box-shadow 0.3s;
             position: relative;
+        }
+        .resource-item:hover, .resource-item:focus-within {
+            background: rgba(67,206,162,0.13);
+            box-shadow: 0 4px 24px 0 rgba(67,206,162,0.15);
         }
 
         .resource-item h3 {
-            color: var(--accent-gold);
+            background: linear-gradient(90deg, #4f8cff, #43cea2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
         }
 
         .resource-item p {
-            color: #ccc;
-            margin: 0.5rem 0;
+            color: #e0e0e0;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 1rem;
+            line-height: 1.5;
         }
 
         .resource-item a {
@@ -590,6 +607,15 @@
                 font-size: 50px;
             }
         }
+
+        @media (max-width: 600px) {
+            .resource-card {
+                padding: 1.2rem 0.5rem;
+            }
+            .resource-item {
+                padding: 1rem 0.5rem;
+            }
+        }
     </style>
 </head>
 <body data-theme="dark">
@@ -661,7 +687,7 @@
             </div>
             <div class="resource-item">
                 <h3>Noeisi+Ninja Ripper Full App Safe</h3>
-                <p></p>
+                <p>Get the full, safe version of Noeisi and Ninja Ripper combined.</p>
                 <button class="open-link-btn" data-link="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" aria-label="Download Noeisi+Ninja Ripper Full App Safe">Open Link</button>
             </div>
         </div>

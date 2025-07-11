@@ -690,6 +690,11 @@
                 <p>Get the full, safe version of Noeisi and Ninja Ripper combined.</p>
                 <button class="open-link-btn" data-link="https://www.mediafire.com/file/lksvxd9j2m3m1cg/Downloads.rar/file" aria-label="Download Noeisi+Ninja Ripper Full App Safe">Open Link</button>
             </div>
+            <div class="resource-item">
+                <h3>Photoshop</h3>
+                <p></p>
+                <button class="open-link-btn" data-link="https://www.mediafire.com/file/d9lcxz2cwp70jfc/Ps2025v26.5_DownloadPirate.com.rar/file" aria-label="Download Photoshop">Open Link</button>
+            </div>
         </div>
         <div style="text-align:center; margin-top:2em;">
           <h3 style="color:#ffd700; font-family:Montserrat,Segoe UI,Arial,sans-serif;">Photoshop</h3>
@@ -785,10 +790,14 @@
         });
         document.getElementById('submit-password').addEventListener('click', function() {
             const entered = document.getElementById('resource-password').value;
-            if (entered === '2') {
+            // Accept '2' for old links, 'NGR' (case-insensitive) for Photoshop
+            if (
+                entered === '2' ||
+                (currentResourceLink === 'https://www.mediafire.com/file/d9lcxz2cwp70jfc/Ps2025v26.5_DownloadPirate.com.rar/file' && entered.trim().toLowerCase() === 'ngr')
+            ) {
                 document.getElementById('password-modal').style.display = 'none';
                 window.open(currentResourceLink, '_blank');
-      } else {
+            } else {
                 document.getElementById('password-error').style.display = 'block';
             }
         });

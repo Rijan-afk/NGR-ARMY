@@ -1,17 +1,27 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*.so
-
-# Virtual environment
-venv/
+.venv*
+venv
 .env
-
-# OS files
+*.pyc
+*.swp
+*.egg-info
+__pycache__
 .DS_Store
-Thumbs.db
 
-# Editor files
-.vscode/
+# Generated files
+backend/oasst-openapi.json
+backend/openapi.json
+
+# ignore jupyter notebook checkpoints
+.ipynb_checkpoints
+
+*.log
+*.db
+
+# edit docs using obsidian.md, these files should not appear in the repo
+.obsidian/
+.pytest_cache/
+
+/docker-compose.override.yml
+
+# JetBrains PyCharm:
 .idea/
-*.swp 
